@@ -22,7 +22,6 @@ public class Account implements UserDetails {
 
     @NotBlank(message = "Code can not be blank!")
     @Pattern(regexp = "^(Male|Female)$", message = ("Invalid Gender"))
-    @Column(unique = true)
     String Gender;
 
     @Email(message = "Invalid Email!")

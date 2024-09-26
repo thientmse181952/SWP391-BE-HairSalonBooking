@@ -11,7 +11,6 @@ import lombok.Data;
 public class RegisterRequest {
     @NotBlank(message = "Code can not be blank!")
     @Pattern(regexp = "^(Male|Female)$", message = ("Invalid Gender"))
-    @Column(unique = true)
     String Gender;
 
     @Email(message = "Invalid Email!")

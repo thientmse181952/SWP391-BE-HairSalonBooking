@@ -12,6 +12,8 @@ import lombok.Setter;
 @Getter
 @Entity
 public class CustomCollection {
+
+    boolean isDeleted = false;
     @Id
             @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;

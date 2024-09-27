@@ -23,15 +23,11 @@ public class Customer {
     @NotBlank(message = "Name can not be blank!")
     String name;
 
-    @NotBlank
+    @NotBlank(message = "Code can not be blank!")
+    @Pattern(regexp = "^(Male|Female)$", message = ("Invalid Gender"))
     String Gender;
 
-    @NotBlank(message = "Code can not be blank!")
-    @Pattern(regexp = "SE\\d{6}", message = "Student code is not valid!")
-    @Column(unique = true) // duy nhất
-    String code;
 
-    @Min(value = 0, message = "Score must be at least 0!")
-    @Max(value = 10, message = "Score must not be more than 10!")
-    float score;
+
+
 }

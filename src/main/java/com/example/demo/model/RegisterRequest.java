@@ -9,6 +9,12 @@ import lombok.Data;
 
 @Data
 public class RegisterRequest {
+
+    @NotBlank
+    @Pattern(regexp = "^[A-Z][a-z]+(\\s[A-Z][a-z]+)*$" , message = "Number not allowed!")
+    @Column(unique = true)
+    String FullName;
+
     @NotBlank(message = "Code can not be blank!")
     @Pattern(regexp = "^(Male|Female)$", message = ("Invalid Gender"))
     String Gender;

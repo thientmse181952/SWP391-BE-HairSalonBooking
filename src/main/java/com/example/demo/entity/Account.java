@@ -20,6 +20,11 @@ public class Account implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
+    @NotBlank
+    @Pattern(regexp = "^[A-Z][a-z]+(\\s[A-Z][a-z]+)*$" , message = "Number not allowed!")
+    @Column(unique = true)
+    String FullName;
+
     @NotBlank(message = "Code can not be blank!")
     @Pattern(regexp = "^(Male|Female)$", message = ("Invalid Gender"))
     String Gender;

@@ -35,6 +35,9 @@ public class AuthenticationService implements UserDetailsService {
     @Autowired
     AuthenticationManager authenticationManager;
 
+    @Autowired
+    TokenService tokenService;
+
     public AccountResponse register(RegisterRequest registerRequest) {
         // map RegisterRequest => Account
         Account account = modelMapper.map(registerRequest, Account.class);
@@ -78,7 +81,9 @@ public class AuthenticationService implements UserDetailsService {
                     loginRequest.getPassword()
             ));
             Account account = (Account) authentication.getPrincipal();
-            return modelMapper.map(account, AccountResponse.class);
+            AccountResponse accountResponse = modelMapper.map(account, AccountResponse.class);
+            accountResponse.setToken(tokenService.generateToken(account));
+            return accountResponse;
         } catch (Exception e) {
             throw new NotFoundException("Username or password invalid!");
         }

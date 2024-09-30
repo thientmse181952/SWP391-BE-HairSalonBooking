@@ -1,15 +1,13 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.CustomCollection;
-import com.example.demo.entity.Customer;
 import com.example.demo.exception.DuplicateEntity;
 import com.example.demo.exception.NotFoundException;
 import com.example.demo.repository.CollectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
+
 import java.util.List;
 
 @Service

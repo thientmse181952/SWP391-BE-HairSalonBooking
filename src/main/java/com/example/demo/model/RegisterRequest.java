@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.example.demo.entity.Role;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -11,9 +12,7 @@ import lombok.Data;
 public class RegisterRequest {
 
     @NotBlank
-    @Pattern(regexp = "^[A-Z][a-z]+(\\s[A-Z][a-z]+)*$" , message = "Number not allowed!")
-    @Column(unique = true)
-    String FullName;
+    String fullName;
 
     @NotBlank(message = "Code can not be blank!")
     @Pattern(regexp = "^(Male|Female)$", message = ("Invalid Gender"))
@@ -29,4 +28,6 @@ public class RegisterRequest {
 
     @Size(min = 6, message = "Password must be at least 6 character!")
     String password;
+
+    Role role;
 }

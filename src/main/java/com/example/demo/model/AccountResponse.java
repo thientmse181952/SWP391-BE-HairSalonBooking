@@ -9,4 +9,5 @@ public class AccountResponse {
     String Gender;
     String email;
     String phone;
+    String token;
 }

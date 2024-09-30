@@ -3,6 +3,7 @@ package com.example.demo.api;
 import com.example.demo.entity.CustomCollection;
 import com.example.demo.entity.ServiceofHair;
 import com.example.demo.service.HairService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 @RequestMapping("/api/service")
 @RestController
-
+@SecurityRequirement(name = "api")
 public class HairServiceAPI {
 
     @Autowired

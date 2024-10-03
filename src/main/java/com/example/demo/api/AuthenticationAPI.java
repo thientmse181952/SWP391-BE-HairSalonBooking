@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api")
-@SecurityRequirement(name = "api")
+
 public class AuthenticationAPI {
 
     // DI: Dependency Injection

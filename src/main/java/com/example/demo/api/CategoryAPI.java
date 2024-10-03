@@ -12,12 +12,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/category")
-@SecurityRequirement(name = "api")
 public class CategoryAPI {
 
     @Autowired
     CategoryService categoryService;
     @PostMapping
+    @SecurityRequirement(name = "api")
     public ResponseEntity<Category> createCategory(@Valid @RequestBody Category category) {
         Category newCategory = categoryService.createCategory(category);
         return ResponseEntity.ok(newCategory);
@@ -30,11 +30,13 @@ public class CategoryAPI {
     }
 
     @PutMapping("{id}")
+    @SecurityRequirement(name = "api")
     public ResponseEntity<Category> updateCategory (@Valid @RequestBody Category category, @PathVariable long id) {
         Category newCategory =categoryService.updatCategory(category, id);
         return ResponseEntity.ok(newCategory);
     }
     @DeleteMapping("{id}")
+    @SecurityRequirement(name = "api")
     public ResponseEntity<Category> deleteCategory(@PathVariable long id) {
         Category category = categoryService.deleteCategory(id);
         return ResponseEntity.ok(category);

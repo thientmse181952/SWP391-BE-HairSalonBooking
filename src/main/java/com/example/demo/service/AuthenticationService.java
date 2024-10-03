@@ -4,6 +4,7 @@ import com.example.demo.entity.Account;
 import com.example.demo.exception.DuplicateEntity;
 import com.example.demo.exception.NotFoundException;
 import com.example.demo.model.AccountResponse;
+import com.example.demo.model.EmailDetail;
 import com.example.demo.model.LoginRequest;
 import com.example.demo.model.RegisterRequest;
 import com.example.demo.repository.AccountRepository;
@@ -38,6 +39,9 @@ public class AuthenticationService implements UserDetailsService {
     @Autowired
     TokenService tokenService;
 
+    @Autowired
+    EmailService emailService;
+
     public AccountResponse register(RegisterRequest registerRequest) {
         // map RegisterRequest => Account
         Account account = modelMapper.map(registerRequest, Account.class);
@@ -59,6 +63,14 @@ public class AuthenticationService implements UserDetailsService {
 
             // Lưu tài khoản mới vào database
             Account newAccount = accountRepository.save(account);
+
+            EmailDetail emailDetail = new EmailDetail();
+            emailDetail.setAccount(newAccount);
+            emailDetail.setSubject("Welcome to Hair Salon");
+            // chen link wweb vao day
+            emailDetail.setLink("https://www.google.com/");
+
+            emailService.sentEmail(emailDetail);
 
             // Trả về thông tin tài khoản đã tạo
             return modelMapper.map(newAccount, AccountResponse.class);

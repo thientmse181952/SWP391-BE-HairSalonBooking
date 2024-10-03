@@ -14,12 +14,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/collection")
-@SecurityRequirement(name = "api")
 public class CollectionAPI {
     @Autowired
     CollectionService collectionService;
 
     @PostMapping
+    @SecurityRequirement(name = "api")
     public ResponseEntity<CustomCollection> create(@Valid @RequestBody CustomCollection customCollection) {
         CustomCollection newCustomCollection =collectionService.createNewCollection(customCollection);
         return ResponseEntity.ok(newCustomCollection);
@@ -32,11 +32,13 @@ public class CollectionAPI {
     }
 
     @PutMapping("{id}")
+    @SecurityRequirement(name = "api")
     public ResponseEntity<CustomCollection> updateCollections (@Valid @RequestBody CustomCollection customCollection, @PathVariable long id) {
         CustomCollection newCustomCollection =collectionService.updateCollections(customCollection, id);
         return ResponseEntity.ok(newCustomCollection);
     }
     @DeleteMapping("{id}")
+    @SecurityRequirement(name = "api")
     public ResponseEntity<CustomCollection> deleteCollections(@PathVariable long id) {
         CustomCollection customCollection = collectionService.deleteCollections(id);
         return ResponseEntity.ok(customCollection);

@@ -39,7 +39,9 @@ public class Filter extends OncePerRequestFilter {
             "/api/category/getCategory",
             "/api/collection/getCollection",
             "/api/service/getService",
-            "/api/stylist/getStylist"
+            "/api/stylist/getStylist",
+            "/api/collection/type/{type}",
+            "/api/service/type/{type}"
 
 
 

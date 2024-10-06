@@ -1,5 +1,6 @@
 package com.example.demo.repository;
 
+import com.example.demo.entity.CustomCollection;
 import com.example.demo.entity.ServiceofHair;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -13,4 +14,6 @@ public interface HairServiceRepository extends JpaRepository<ServiceofHair, Long
 
     // lấy danh sách những thằng student mà isDeleted = false
     List<ServiceofHair> findServiceByIsDeletedFalse();
+
+    List<ServiceofHair> findByType(String type);
 }

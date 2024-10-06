@@ -16,9 +16,9 @@ public class HairService {
     @Autowired
     HairServiceRepository hairServiceRepository;
 
-    public List<ServiceofHair> getAllService() {
-        List<ServiceofHair> serviceHair = hairServiceRepository.findServiceByIsDeletedFalse();
-        return serviceHair;
+    public List<ServiceofHair> getServiceByType(String type) {
+        List<ServiceofHair> serviceofHairs = hairServiceRepository.findByType("someType");
+        return hairServiceRepository.findByType(type);
     }
 
     public ServiceofHair createNewService(ServiceofHair serviceHair) {

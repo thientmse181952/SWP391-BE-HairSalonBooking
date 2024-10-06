@@ -2,6 +2,7 @@ package com.example.demo.api;
 
 import com.example.demo.entity.CustomCollection;
 
+import com.example.demo.entity.Customer;
 import com.example.demo.service.CollectionService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
@@ -25,11 +26,11 @@ public class CollectionAPI {
         return ResponseEntity.ok(newCustomCollection);
     }
 
-    @GetMapping("getCollection")
-    public ResponseEntity getCollection() {
-        List<CustomCollection> collectionList = collectionService.getAllCollections();
-        return ResponseEntity.ok(collectionList);
+    @GetMapping("/type/{type}")
+    public List<CustomCollection> getServicesByType(@PathVariable String type) {
+        return collectionService.getCollectionsByType(type);
     }
+
 
     @PutMapping("{id}")
     public ResponseEntity<CustomCollection> updateCollections (@Valid @RequestBody CustomCollection customCollection, @PathVariable long id) {

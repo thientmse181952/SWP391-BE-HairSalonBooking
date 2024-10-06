@@ -1,5 +1,6 @@
 package com.example.demo.api;
 
+import com.example.demo.entity.CustomCollection;
 import com.example.demo.entity.ServiceofHair;
 import com.example.demo.service.HairService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -23,11 +24,12 @@ public class HairServiceAPI {
         return ResponseEntity.ok(newServiceofHair);
     }
 
-    @GetMapping("getService")
-    public ResponseEntity get() {
-        List<ServiceofHair> hairServiceList = hairService.getAllService();
-        return ResponseEntity.ok(hairServiceList);
+    @GetMapping("/type/{type}")
+    public List<ServiceofHair> getServicesByType(@PathVariable String type) {
+        return hairService.getServiceByType(type);
     }
+
+
 
     @PutMapping("{id}")
     public ResponseEntity<ServiceofHair> updateService(@Valid @RequestBody ServiceofHair serviceofHair, @PathVariable long id) {

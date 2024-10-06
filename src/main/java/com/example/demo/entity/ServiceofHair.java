@@ -43,4 +43,7 @@ public class ServiceofHair {
 
     @NotBlank(message = "Category can't be blank!")
     String date;
+
+    @NotBlank(message = "Category can't be blank!")
+    String type;
 }

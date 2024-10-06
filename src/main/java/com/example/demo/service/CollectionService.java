@@ -16,9 +16,9 @@ public class CollectionService {
     CollectionRepository collectionRepository;
 
 
-    public List<CustomCollection> getAllCollections() {
-        List<CustomCollection> collections = collectionRepository.findCollectionByIsDeletedFalse();
-        return collections;
+    public List<CustomCollection> getCollectionsByType(String type) {
+        List<CustomCollection> collections = collectionRepository.findByType("someType");
+        return collectionRepository.findByType(type);
     }
 
     public CustomCollection createNewCollection(CustomCollection customCollection) {

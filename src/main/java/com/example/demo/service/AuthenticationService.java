@@ -64,14 +64,13 @@ public class AuthenticationService implements UserDetailsService {
 
             // Lưu tài khoản mới vào database
             Account newAccount = accountRepository.save(account);
-
             EmailDetail emailDetail = new EmailDetail();
             emailDetail.setAccount(newAccount);
             emailDetail.setSubject("Welcome to Hair Salon");
             // chen link wweb vao day
             emailDetail.setLink("https://www.google.com/");
-
             emailService.sentEmail(emailDetail);
+
 
             // Trả về thông tin tài khoản đã tạo
             return modelMapper.map(newAccount, AccountResponse.class);

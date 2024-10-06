@@ -1,6 +1,5 @@
 package com.example.demo.api;
 
-import com.example.demo.entity.CustomCollection;
 import com.example.demo.entity.ServiceofHair;
 import com.example.demo.service.HairService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;

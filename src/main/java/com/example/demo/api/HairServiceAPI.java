@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+@SecurityRequirement(name = "api")
 @RequestMapping("/api/service")
 @RestController
 public class HairServiceAPI {
@@ -23,7 +24,7 @@ public class HairServiceAPI {
         return ResponseEntity.ok(newServiceofHair);
     }
 
-    @GetMapping
+    @GetMapping("getService")
     public ResponseEntity get() {
         List<ServiceofHair> hairServiceList = hairService.getAllService();
         return ResponseEntity.ok(hairServiceList);

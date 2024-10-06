@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,11 +14,16 @@ import lombok.Setter;
 @Entity
 public class Category {
 
+    @JsonIgnore
     boolean isDeleted = false;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
+
     @NotBlank(message = "Category can't be blank!")
     String nameCategory;
+
+
 
 }

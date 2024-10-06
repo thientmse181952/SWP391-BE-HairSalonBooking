@@ -30,7 +30,7 @@ public class EmailService {
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
 
             // Setting up necessary details
-            mimeMessageHelper.setFrom("admin@gmail.com");
+            mimeMessageHelper.setFrom("0923040196h@gmail.com");
             mimeMessageHelper.setTo(emailDetail.getAccount().getEmail());
             mimeMessageHelper.setText(template, true);
             mimeMessageHelper.setSubject(emailDetail.getSubject());

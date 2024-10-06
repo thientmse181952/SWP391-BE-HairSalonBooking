@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import com.example.demo.entity.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -28,6 +29,7 @@ public class RegisterRequest {
 
     @Size(min = 6, message = "Password must be at least 6 character!")
     String password;
+
 
     Role role;
 }

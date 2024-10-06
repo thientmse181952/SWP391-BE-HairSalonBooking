@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@SecurityRequirement(name = "api")
 @RestController
 @RequestMapping("/api/collection")
 public class CollectionAPI {
@@ -19,26 +20,23 @@ public class CollectionAPI {
     CollectionService collectionService;
 
     @PostMapping
-    @SecurityRequirement(name = "api")
     public ResponseEntity<CustomCollection> create(@Valid @RequestBody CustomCollection customCollection) {
         CustomCollection newCustomCollection =collectionService.createNewCollection(customCollection);
         return ResponseEntity.ok(newCustomCollection);
     }
 
-    @GetMapping
+    @GetMapping("getCollection")
     public ResponseEntity getCollection() {
         List<CustomCollection> collectionList = collectionService.getAllCollections();
         return ResponseEntity.ok(collectionList);
     }
 
     @PutMapping("{id}")
-    @SecurityRequirement(name = "api")
     public ResponseEntity<CustomCollection> updateCollections (@Valid @RequestBody CustomCollection customCollection, @PathVariable long id) {
         CustomCollection newCustomCollection =collectionService.updateCollections(customCollection, id);
         return ResponseEntity.ok(newCustomCollection);
     }
     @DeleteMapping("{id}")
-    @SecurityRequirement(name = "api")
     public ResponseEntity<CustomCollection> deleteCollections(@PathVariable long id) {
         CustomCollection customCollection = collectionService.deleteCollections(id);
         return ResponseEntity.ok(customCollection);

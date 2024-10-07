@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.CustomCollection;
+import com.example.demo.entity.Customer;
 import com.example.demo.entity.ServiceofHair;
 import com.example.demo.exception.DuplicateEntity;
 import com.example.demo.exception.NotFoundException;
@@ -16,9 +17,9 @@ public class HairService {
     @Autowired
     HairServiceRepository hairServiceRepository;
 
-    public List<ServiceofHair> getServiceByType(String type) {
-        List<ServiceofHair> serviceofHairs = hairServiceRepository.findByType("someType");
-        return hairServiceRepository.findByType(type);
+    public List<ServiceofHair> getAll() {
+        List<ServiceofHair> serviceofHairs = hairServiceRepository.findServiceByIsDeletedFalse();
+        return serviceofHairs;
     }
 
     public ServiceofHair createNewService(ServiceofHair serviceHair) {

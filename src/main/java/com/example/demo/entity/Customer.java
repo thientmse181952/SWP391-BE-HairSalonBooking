@@ -33,9 +33,9 @@ public class Customer {
     @Pattern(regexp = "^(Male|Female)$", message = ("Invalid Gender"))
     String Gender;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "account_id")
-    Account account;
+    private Account account;
 
 
 

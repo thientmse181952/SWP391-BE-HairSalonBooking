@@ -23,6 +23,7 @@ public class CustomerService {
 
     @Autowired
     CustomerRepository  customerRepository;
+
     public Customer createNewCustomer(CustomerRequest customerRequest) {
         Customer customer = modelMapper.map(customerRequest, Customer.class);
 

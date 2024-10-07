@@ -15,5 +15,5 @@ public interface HairServiceRepository extends JpaRepository<ServiceofHair, Long
     // lấy danh sách những thằng student mà isDeleted = false
     List<ServiceofHair> findServiceByIsDeletedFalse();
 
-    List<ServiceofHair> findByType(String type);
+
 }

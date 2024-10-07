@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.CustomCollection;
+import com.example.demo.entity.ServiceofHair;
 import com.example.demo.exception.DuplicateEntity;
 import com.example.demo.exception.NotFoundException;
 import com.example.demo.repository.CollectionRepository;
@@ -16,11 +17,10 @@ public class CollectionService {
     CollectionRepository collectionRepository;
 
 
-    public List<CustomCollection> getCollectionsByType(String type) {
-        List<CustomCollection> collections = collectionRepository.findByType("someType");
-        return collectionRepository.findByType(type);
+    public List<CustomCollection> getAll() {
+        List<CustomCollection> collections = collectionRepository.findServiceByIsDeletedFalse();
+        return collections;
     }
-
     public CustomCollection createNewCollection(CustomCollection customCollection) {
         try{
             CustomCollection newCustomCollection = collectionRepository.save(customCollection);

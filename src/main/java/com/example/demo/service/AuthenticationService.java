@@ -1,6 +1,8 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Account;
+import com.example.demo.entity.Customer;
+import com.example.demo.entity.Role;
 import com.example.demo.exception.DuplicateEntity;
 import com.example.demo.exception.NotFoundException;
 import com.example.demo.model.AccountResponse;
@@ -8,6 +10,7 @@ import com.example.demo.model.EmailDetail;
 import com.example.demo.model.LoginRequest;
 import com.example.demo.model.RegisterRequest;
 import com.example.demo.repository.AccountRepository;
+import com.example.demo.repository.CustomerRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -42,6 +45,9 @@ public class AuthenticationService implements UserDetailsService {
 
     @Autowired
     EmailService emailService;
+
+    @Autowired
+    CustomerRepository customerRepository;
 
     public AccountResponse register(RegisterRequest registerRequest) {
         // map RegisterRequest => Account
@@ -111,4 +117,7 @@ public class AuthenticationService implements UserDetailsService {
         Account account = (Account) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return accountRepository.findAccountById(account.getId());
     }
+
+
+
 }

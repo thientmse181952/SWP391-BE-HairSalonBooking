@@ -29,5 +29,4 @@ public class CustomCollection {
     @NotBlank(message = "Category can't be blank!")
     String date;
 
-    String type;
 }

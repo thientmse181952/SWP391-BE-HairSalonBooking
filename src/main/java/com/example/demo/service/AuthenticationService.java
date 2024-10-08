@@ -1,8 +1,6 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Account;
-import com.example.demo.entity.Customer;
-import com.example.demo.entity.Role;
 import com.example.demo.exception.DuplicateEntity;
 import com.example.demo.exception.NotFoundException;
 import com.example.demo.model.AccountResponse;
@@ -46,8 +44,6 @@ public class AuthenticationService implements UserDetailsService {
     @Autowired
     EmailService emailService;
 
-    @Autowired
-    CustomerRepository customerRepository;
 
     public AccountResponse register(RegisterRequest registerRequest) {
         // map RegisterRequest => Account

@@ -26,7 +26,6 @@ public class ServiceofHair {
     @NotBlank(message = "Category can't be blank!")
     String description;
 
-    @NotBlank(message = "Category can't be blank!")
     int price;
 
     @NotBlank(message = "Category can't be blank!")

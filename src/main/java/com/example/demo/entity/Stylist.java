@@ -23,12 +23,9 @@ public class Stylist {
     @NotBlank(message = "Name can not be blank!")
     String name;
 
-    @Email(message = "Invalid Email!")
-    @Column(unique = true)
     String rating;
 
     @Pattern(regexp = "(84|0[3|5|7|8|9])+(\\d{8})", message = "Invalid phone!")
-    @Column(unique = true)
     String image;
 
     @NotBlank(message = "Code can not be blank!")

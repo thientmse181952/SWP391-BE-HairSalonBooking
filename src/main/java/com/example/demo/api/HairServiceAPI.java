@@ -25,7 +25,7 @@ public class HairServiceAPI {
         return ResponseEntity.ok(newServiceofHair);
     }
 
-    @GetMapping
+    @GetMapping("/getService")
     public ResponseEntity get() {
         List<ServiceofHair> serviceofHairs = hairService.getAll();
         return ResponseEntity.ok(serviceofHairs);

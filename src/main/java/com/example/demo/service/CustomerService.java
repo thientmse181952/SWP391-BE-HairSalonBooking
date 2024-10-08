@@ -27,9 +27,9 @@ public class CustomerService {
     public Customer createNewCustomer(CustomerRequest customerRequest) {
         Customer customer = modelMapper.map(customerRequest, Customer.class);
 
-        //Lưu thông tin người tạo
-        Account account = authenticationService.getCurrentAccount();
-        customer.setAccount(account);
+//        //Lưu thông tin người tạo
+//        Account account = authenticationService.getCurrentAccount();
+//        customer.setAccount(account);
         try{
 
             //Lưu thông tin account

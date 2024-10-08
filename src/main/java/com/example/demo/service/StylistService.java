@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.Customer;
 import com.example.demo.entity.Stylist;
 import com.example.demo.exception.DuplicateEntity;
 import com.example.demo.exception.NotFoundException;

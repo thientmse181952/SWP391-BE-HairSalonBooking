@@ -1,6 +1,5 @@
 package com.example.demo.api;
 
-import com.example.demo.entity.CategoryCollection;
 import com.example.demo.entity.CustomCollection;
 
 import com.example.demo.entity.Customer;
@@ -27,7 +26,7 @@ public class CollectionAPI {
         return ResponseEntity.ok(newCustomCollection);
     }
 
-    @GetMapping
+    @GetMapping("/getCollection")
     public ResponseEntity getCollections() {
         List<CustomCollection> collectiontList = collectionService.getAll();
         return ResponseEntity.ok(collectiontList);

@@ -9,6 +9,8 @@ import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Setter
 @Getter
 @Entity
@@ -25,13 +27,22 @@ public class Stylist {
 
     String rating;
 
-    @Pattern(regexp = "(84|0[3|5|7|8|9])+(\\d{8})", message = "Invalid phone!")
     String image;
 
     @NotBlank(message = "Code can not be blank!")
     @Pattern(regexp = "^(Male|Female)$", message = ("Invalid Gender"))
     String Gender;
 
+   @ManyToMany
+           @JoinTable(name = "service_class",
+                   joinColumns = @JoinColumn(name = "stylist_id"),
+                   inverseJoinColumns = @JoinColumn(name = "serviceofStylist_id")
+
+
+           )
+
+@JsonIgnore
+   Set<ServiceofStylist> serviceofStylists;
 
 
 

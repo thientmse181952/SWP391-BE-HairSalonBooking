@@ -80,7 +80,5 @@ public class Account implements UserDetails {
         return true;
     }
 
-//    @OneToMany(mappedBy = "account")
-//    @JsonIgnore
-//    List<Customer> customers;
+
 }

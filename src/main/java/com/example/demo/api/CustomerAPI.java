@@ -2,7 +2,7 @@ package com.example.demo.api;
 
 
 import com.example.demo.entity.Customer;
-import com.example.demo.model.CustomerRequest;
+import com.example.demo.model.StylistRequest;
 import com.example.demo.service.CustomerService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
@@ -22,7 +22,7 @@ public class CustomerAPI {
 @PostMapping
 //@PreAuthorize("hasAuthority('MANAGER')")
 //CHỈ NHỮNG THẰNG CÓ QUYỀN MANAGER MỚI ĐƯỢC TẠO
-public ResponseEntity<Customer> create(@Valid @RequestBody CustomerRequest customer) {
+public ResponseEntity<Customer> create(@Valid @RequestBody StylistRequest customer) {
    Customer newCustomer =customerService.createNewCustomer(customer);
    return ResponseEntity.ok(newCustomer);
 }

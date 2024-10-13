@@ -4,7 +4,6 @@ import com.example.demo.entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
@@ -14,5 +13,4 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
     // lấy danh sách những thằng student mà isDeleted = false
     List<Customer> findCustomersByIsDeletedFalse();
-
 }

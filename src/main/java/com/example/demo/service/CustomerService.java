@@ -1,10 +1,9 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.Account;
 import com.example.demo.entity.Customer;
 import com.example.demo.exception.DuplicateEntity;
 import com.example.demo.exception.NotFoundException;
-import com.example.demo.model.CustomerRequest;
+import com.example.demo.model.StylistRequest;
 import com.example.demo.repository.CustomerRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,7 @@ public class CustomerService {
     @Autowired
     CustomerRepository  customerRepository;
 
-    public Customer createNewCustomer(CustomerRequest customerRequest) {
+    public Customer createNewCustomer(StylistRequest customerRequest) {
         Customer customer = modelMapper.map(customerRequest, Customer.class);
 
 //        //Lưu thông tin người tạo

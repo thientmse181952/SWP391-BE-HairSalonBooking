@@ -3,6 +3,7 @@ package com.example.demo.api;
 
 import com.example.demo.entity.Customer;
 import com.example.demo.entity.Stylist;
+import com.example.demo.model.StylistRequest;
 import com.example.demo.service.CustomerService;
 import com.example.demo.service.StylistService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -23,7 +24,7 @@ public class StylistAPI {
 @PostMapping
 //@PreAuthorize("hasAuthority('MANAGER')")
 //CHỈ NHỮNG THẰNG CÓ QUYỀN MANAGER MỚI ĐƯỢC TẠO
-public ResponseEntity<Stylist> create(@Valid @RequestBody Stylist stylist) {
+public ResponseEntity<Stylist> create(@Valid @RequestBody StylistRequest stylist) {
    Stylist newStylist =stylistService.createNewStylist(stylist);
    return ResponseEntity.ok(newStylist);
 }

@@ -8,6 +8,7 @@ import com.example.demo.model.EmailDetail;
 import com.example.demo.model.LoginRequest;
 import com.example.demo.model.RegisterRequest;
 import com.example.demo.repository.AccountRepository;
+import com.example.demo.repository.CustomerRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -113,22 +114,6 @@ public class AuthenticationService implements UserDetailsService {
         return accountRepository.findAccountById(account.getId());
     }
 
-    public void changePassword(String currentPassword, String newPassword, String confirmPassword) {
-        // Get the current authenticated account
-        Account account = getCurrentAccount();
 
-        // Verify that the current password matches the one in the database
-        if (!passwordEncoder.matches(currentPassword, account.getPassword())) {
-            throw new IllegalArgumentException("Current password is incorrect.");
-        }
 
-        // Verify that the new password matches the confirm password
-        if (!newPassword.equals(confirmPassword)) {
-            throw new IllegalArgumentException("New password and confirm password do not match.");
-        }
-
-        // Set the new password and save the account
-        account.setPassword(passwordEncoder.encode(newPassword));
-        accountRepository.save(account);
-    }
 }

@@ -1,8 +1,7 @@
 package com.example.demo.api;
 
-import com.example.demo.entity.CustomCollection;
-import com.example.demo.entity.Customer;
-import com.example.demo.entity.ServiceofHair;
+import com.example.demo.entity.ServiceofStylist;
+import com.example.demo.model.ServiceRequest;
 import com.example.demo.service.HairService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
@@ -20,26 +19,26 @@ public class HairServiceAPI {
     HairService hairService;
 
     @PostMapping
-    public ResponseEntity<ServiceofHair> createService(@Valid @RequestBody ServiceofHair serviceofHair) {
-        ServiceofHair newServiceofHair =hairService.createNewService(serviceofHair);
+    public ResponseEntity<ServiceofStylist> createService(@Valid @RequestBody ServiceRequest serviceofHair) {
+        ServiceofStylist newServiceofHair =hairService.createNewService(serviceofHair);
         return ResponseEntity.ok(newServiceofHair);
     }
 
     @GetMapping("/getService")
     public ResponseEntity get() {
-        List<ServiceofHair> serviceofHairs = hairService.getAll();
+        List<ServiceofStylist> serviceofHairs = hairService.getAll();
         return ResponseEntity.ok(serviceofHairs);
     }
 
 
     @PutMapping("{id}")
-    public ResponseEntity<ServiceofHair> updateService(@Valid @RequestBody ServiceofHair serviceofHair, @PathVariable long id) {
-        ServiceofHair newServiceofHair =hairService.updateService(serviceofHair, id);
+    public ResponseEntity<ServiceofStylist> updateService(@Valid @RequestBody ServiceofStylist serviceofHair, @PathVariable long id) {
+        ServiceofStylist newServiceofHair =hairService.updateService(serviceofHair, id);
         return ResponseEntity.ok(newServiceofHair);
     }
     @DeleteMapping("{id}")
-    public ResponseEntity<ServiceofHair> deleteService(@PathVariable long id) {
-        ServiceofHair serviceofHair = hairService.deleteService(id);
+    public ResponseEntity<ServiceofStylist> deleteService(@PathVariable long id) {
+        ServiceofStylist serviceofHair = hairService.deleteService(id);
         return ResponseEntity.ok(serviceofHair);
     }
 

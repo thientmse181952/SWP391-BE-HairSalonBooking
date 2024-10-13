@@ -80,5 +80,6 @@ public class Account implements UserDetails {
         return true;
     }
 
-
+    @OneToMany(mappedBy = "account")
+    List<Stylist> stylists;
 }

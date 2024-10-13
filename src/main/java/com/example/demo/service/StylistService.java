@@ -37,6 +37,8 @@ public class StylistService {
     public Stylist createNewStylist(StylistRequest stylistRequest) {
         Stylist stylist = modelMapper.map(stylistRequest, Stylist.class);
 
+        Account account = authenticationService.getCurrentAccount();
+        stylist.setAccount(account);
 
         Set<ServiceofStylist> serviceofStylists = new HashSet<>();
         for(Long idService : stylistRequest.getService_id()){

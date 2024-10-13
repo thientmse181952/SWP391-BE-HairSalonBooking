@@ -44,6 +44,9 @@ public class Stylist {
 @JsonIgnore
    Set<ServiceofStylist> serviceofStylists;
 
-
+    @ManyToOne
+    @JoinColumn(name = "account_id")
+    @JsonIgnore
+    Account account;
 
 }

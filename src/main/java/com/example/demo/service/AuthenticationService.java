@@ -3,10 +3,7 @@ package com.example.demo.service;
 import com.example.demo.entity.Account;
 import com.example.demo.exception.DuplicateEntity;
 import com.example.demo.exception.NotFoundException;
-import com.example.demo.model.AccountResponse;
-import com.example.demo.model.EmailDetail;
-import com.example.demo.model.LoginRequest;
-import com.example.demo.model.RegisterRequest;
+import com.example.demo.model.*;
 import com.example.demo.repository.AccountRepository;
 import com.example.demo.repository.CustomerRepository;
 import org.modelmapper.ModelMapper;
@@ -113,7 +110,34 @@ public class AuthenticationService implements UserDetailsService {
         Account account = (Account) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return accountRepository.findAccountById(account.getId());
     }
+    public Account updateAuthentication(Long authId, ChangInforRequest request) {
+        Account auth = accountRepository.findById(authId)
+                .orElseThrow(() -> new NotFoundException("Authentication not found for this id: " + authId));
 
+        auth.setFullName(request.getFullName());
+        auth.setGender(request.getGender());
+        auth.setEmail(request.getEmail());
+
+        return accountRepository.save(auth);
+    }
+    public void changePassword(String currentPassword, String newPassword, String confirmPassword) {
+        // Get the current authenticated account
+        Account account = getCurrentAccount();
+
+        // Verify that the current password matches the one in the database
+        if (!passwordEncoder.matches(currentPassword, account.getPassword())) {
+            throw new IllegalArgumentException("Current password is incorrect.");
+        }
+
+        // Verify that the new password matches the confirm password
+        if (!newPassword.equals(confirmPassword)) {
+            throw new IllegalArgumentException("New password and confirm password do not match.");
+        }
+
+        // Set the new password and save the account
+        account.setPassword(passwordEncoder.encode(newPassword));
+        accountRepository.save(account);
+    }
 
 
 }

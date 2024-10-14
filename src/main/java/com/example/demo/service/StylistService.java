@@ -67,8 +67,6 @@ public Stylist updateStylist(Stylist stylist, long stylistId) {
     if (oldStylist == null) {
         throw new NotFoundException("Stylist not found");
     }
-    oldStylist.setName(stylist.getName());
-    oldStylist.setGender(stylist.getGender());
     oldStylist.setImage(stylist.getImage());
     return stylistRepository.save(oldStylist);
 }

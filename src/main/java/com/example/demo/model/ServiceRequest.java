@@ -1,17 +1,20 @@
 package com.example.demo.model;
 
-import jakarta.persistence.Column;
-import jakarta.validation.constraints.Email;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import lombok.Data;
-
-import java.util.List;
 
 @Data
 public class ServiceRequest {
-    @NotBlank(message = "Name can not be blank!")
+    @JsonIgnore
+    boolean isDeleted = false;
+
+    @NotBlank(message = "Category can't be blank!")
     String name;
+
     @NotBlank(message = "Category can't be blank!")
     String description;
 
@@ -28,8 +31,4 @@ public class ServiceRequest {
 
     @NotBlank(message = "Category can't be blank!")
     String date;
-
-
-
-
 }

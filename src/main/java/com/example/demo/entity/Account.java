@@ -82,4 +82,10 @@ public class Account implements UserDetails {
 
     @OneToMany(mappedBy = "account")
     List<Stylist> stylists;
+
+    @OneToMany(mappedBy = "account")
+    List<Customer> customers;
+
+
+
 }

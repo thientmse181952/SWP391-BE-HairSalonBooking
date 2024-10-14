@@ -22,16 +22,10 @@ public class Stylist {
     @JsonIgnore // kh trả về và kh bắt user nhập thông tin
     boolean isDeleted = false; //false = not deleted
 
-    @NotBlank(message = "Name can not be blank!")
-    String name;
-
     String rating;
 
     String image;
 
-    @NotBlank(message = "Code can not be blank!")
-    @Pattern(regexp = "^(Male|Female)$", message = ("Invalid Gender"))
-    String Gender;
 
    @ManyToMany
            @JoinTable(name = "service_class",

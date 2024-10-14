@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import com.example.demo.service.OtpService;
-import com.example.demo.service.SmsService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,50 +17,30 @@ public class PasswordResetController {
     @Autowired
     private OtpService otpService;
 
-    @Autowired
-    private SmsService smsService;
-
     @PostMapping("/request-otp")
-    public ResponseEntity<String> requestOtp(@RequestParam String phoneNumber) {
-        // Validate Vietnamese phone number
-        if (!isValidVietnamesePhoneNumber(phoneNumber)) {
-            return ResponseEntity.badRequest().body("Invalid Vietnamese phone number");
-        }
-
+    public String requestOtp(@RequestParam String phoneNumber) {
         String otp = otpService.generateOtp();
-        // TODO: Store OTP and associate it with the user's account in your database
+        boolean isSent = otpService.sendOtp(phoneNumber, otp);
 
-        // Send OTP via SMS
-        try {
-            smsService.sendSms(phoneNumber, "Your OTP for password reset is: " + otp);
-            return ResponseEntity.ok("OTP sent successfully");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to send OTP");
+        if (isSent) {
+            // Here you should store the OTP securely for later verification (e.g., in-memory store, cache, etc.)
+            // For demonstration, we'll return the OTP in response (don't do this in production)
+            return "OTP sent successfully: " + otp; // Remove this in production
+        } else {
+            return "Failed to send OTP.";
         }
     }
 
     @PostMapping("/reset-password")
-    public ResponseEntity<String> resetPassword(@RequestParam String phoneNumber, @RequestParam String otp, @RequestParam String newPassword) {
-        // TODO: Verify OTP and update password in your database
-        // This is a placeholder implementation
-        if (verifyOtp(phoneNumber, otp)) {
-            // Update password logic here
-            return ResponseEntity.ok("Password reset successfully");
+    public String resetPassword(@RequestParam String phoneNumber, @RequestParam String otp, @RequestParam String newPassword) {
+        // Here you should verify the OTP from your temporary store
+        boolean isOtpValid = true; // Replace with actual verification logic
+
+        if (isOtpValid) {
+            // Update the user's password in the database
+            return "Password reset successfully.";
         } else {
-            return ResponseEntity.badRequest().body("Invalid OTP");
+            return "Invalid OTP.";
         }
-    }
-
-    private boolean isValidVietnamesePhoneNumber(String phoneNumber) {
-        // Basic validation for Vietnamese phone numbers
-        // You may want to use a more comprehensive regex or validation library
-        String regex = "^(\\+84|84|0)[35789][0-9]{8}$";
-        return phoneNumber.matches(regex);
-    }
-
-    private boolean verifyOtp(String phoneNumber, String otp) {
-        // TODO: Implement OTP verification logic
-        // This is a placeholder implementation
-        return true;
     }
 }

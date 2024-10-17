@@ -50,6 +50,11 @@ public class BookingService {
         }
 
         booking.setServiceofStylists(serviceofStylists);
+        booking.setAppointmentDate(bookingRequest.getAppointmentDate());
+        booking.setStartTime(bookingRequest.getStartTime());
+        booking.setEndTime(bookingRequest.getEndTime());
+        booking.setStatus(bookingRequest.getStatus());
+
 
 
         try{

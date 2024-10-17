@@ -23,5 +23,8 @@ public class BookingRequest {
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
     Customer customer;
-
+    String appointmentDate;
+    String startTime;
+    String endTime;
+    String status;
 }

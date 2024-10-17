@@ -41,7 +41,7 @@ public ResponseEntity<Stylist> create(@Valid @RequestBody StylistRequest stylist
         return ResponseEntity.ok(stylist);
     }
 @PutMapping("{id}")
-    public ResponseEntity<Stylist> updateStylist (@Valid @RequestBody Stylist stylist, @PathVariable long id) {
+    public ResponseEntity<Stylist> updateStylist (@Valid @RequestBody StylistRequest stylist, @PathVariable long id) {
     Stylist newStylist = stylistService.updateStylist(stylist, id);
     return ResponseEntity.ok(newStylist);
 }

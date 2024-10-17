@@ -26,6 +26,6 @@ public class CustomCollection {
 
     @ManyToOne
     @JoinColumn(name = "category", nullable = false)
-    Category category;
+    CategoryCollection categoryCollection;
 
 }

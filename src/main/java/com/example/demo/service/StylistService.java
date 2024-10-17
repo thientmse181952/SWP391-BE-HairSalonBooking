@@ -63,13 +63,23 @@ public class StylistService {
 
     }
 
-public Stylist updateStylist(Stylist stylist, long stylistId) {
+public Stylist updateStylist(StylistRequest stylistRequest, long stylistId) {
+    Stylist stylist = modelMapper.map(stylistRequest, Stylist.class);
+    Set<ServiceofStylist> serviceofStylists = new HashSet<>();
+    for(Long idService : stylistRequest.getService_id()){
+        ServiceofStylist serviceofStylist = hairServiceRepository.findById(idService).orElseThrow(() -> new NotFoundException("Service not found"));
+        serviceofStylists.add(serviceofStylist);
+    }
+
+    stylist.setServiceofStylists(serviceofStylists);
 
     Stylist oldStylist = stylistRepository.findStylistsById(stylistId);
     if (oldStylist == null) {
         throw new NotFoundException("Stylist not found");
     }
     oldStylist.setImage(stylist.getImage());
+    oldStylist.setServiceofStylists(serviceofStylists);
+
     return stylistRepository.save(oldStylist);
 }
   public Stylist deleteStylist(long stylistId) {

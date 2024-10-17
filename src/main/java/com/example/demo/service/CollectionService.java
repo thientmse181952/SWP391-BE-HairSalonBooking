@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.CategoryCollection;
 import com.example.demo.entity.CustomCollection;
 import com.example.demo.exception.DuplicateEntity;
 import com.example.demo.exception.NotFoundException;
@@ -43,7 +42,7 @@ public class CollectionService {
             throw new NotFoundException("Collection not found");
         }
         oldCustomeCollection.setCollectionImage(customCollection.getCollectionImage());
-        oldCustomeCollection.setCategory(customCollection.getCategory());
+        oldCustomeCollection.setCategoryCollection(customCollection.getCategoryCollection());
         return collectionRepository.save(oldCustomeCollection);
     }
     public CustomCollection deleteCollections(long customeCollectionId){

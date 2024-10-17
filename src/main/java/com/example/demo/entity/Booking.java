@@ -1,8 +1,11 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.Set;
 
 @Getter
 @Setter
@@ -22,9 +25,21 @@ public class Booking {
     @JoinColumn(name = "customer_id", nullable = false)
     Customer customer;
 
-    @ManyToOne
-    @JoinColumn(name = "serviceofHair_id", nullable = false)
-    ServiceofStylist serviceofHair;
+
+    @ManyToMany
+    @JoinTable(name = "booking_class",
+            joinColumns = @JoinColumn(name = "booking_id"),
+            inverseJoinColumns = @JoinColumn(name = "service_id")
+
+
+    )
+    @JsonIgnore
+    Set<ServiceofStylist> serviceofStylists;
+
+
+    @ManyToMany(mappedBy = "bookings")
+    Set<Payment> payments;
+
 
    String appointmentDate;
    String startTime;

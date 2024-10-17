@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.ServiceofStylist;
+import com.example.demo.entity.Stylist;
 import com.example.demo.exception.DuplicateEntity;
 import com.example.demo.exception.NotFoundException;
 import com.example.demo.model.ServiceRequest;
@@ -29,6 +30,11 @@ public class HairService {
     public List<ServiceofStylist> getAll() {
         List<ServiceofStylist> serviceofHairs = hairServiceRepository.findServiceByIsDeletedFalse();
         return serviceofHairs;
+    }
+
+    public ServiceofStylist getServiceById(Long serviceId) {
+        return hairServiceRepository.findById(serviceId).orElseThrow(() -> new NotFoundException("Service not found"));
+
     }
 
     public ServiceofStylist createNewService(ServiceRequest serviceRequest) {

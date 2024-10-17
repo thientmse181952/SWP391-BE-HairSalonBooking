@@ -19,7 +19,7 @@ public class Schedule implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "serviceID", nullable = false)
-    private ServiceofHair service; // Foreign key to Service entity
+    private ServiceofStylist service; // Foreign key to Service entity
 
     private String appointmentDate;
 

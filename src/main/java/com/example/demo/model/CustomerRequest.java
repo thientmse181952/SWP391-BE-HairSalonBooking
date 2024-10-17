@@ -1,10 +1,8 @@
 package com.example.demo.model;
 
+import com.example.demo.entity.Account;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -19,4 +17,10 @@ public class CustomerRequest {
 
     @JsonIgnore // kh trả về và kh bắt user nhập thông tin
     boolean isDeleted = false; //false = not deleted
+
+    @ManyToOne
+    @JoinColumn(name = "account_id")
+    @JsonIgnore
+    Account account;
+
 }

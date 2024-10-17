@@ -1,5 +1,6 @@
 package com.example.demo.api;
 
+import com.example.demo.entity.Booking;
 import com.example.demo.entity.ServiceofStylist;
 import com.example.demo.model.ServiceRequest;
 import com.example.demo.service.HairService;
@@ -28,6 +29,12 @@ public class HairServiceAPI {
     public ResponseEntity get() {
         List<ServiceofStylist> serviceofHairs = hairService.getAll();
         return ResponseEntity.ok(serviceofHairs);
+    }
+
+    @GetMapping("/{getServiceId}")
+    public ResponseEntity<ServiceofStylist> getBookingById(@PathVariable Long getServiceId) {
+        ServiceofStylist serviceofStylist = hairService.getServiceById(getServiceId);
+        return ResponseEntity.ok(serviceofStylist);
     }
 
 

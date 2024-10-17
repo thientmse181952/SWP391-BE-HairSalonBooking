@@ -38,6 +38,13 @@ public class AuthenticationAPI {
         List<Account> accounts = authenticationService.getAllAccount();
         return ResponseEntity.ok(accounts);
     }
+
+    @GetMapping("/{accountId}")
+    public ResponseEntity<Account> getAccountById(@PathVariable Long accountId) {
+        Account updateAccount = authenticationService.getAccountById(accountId);
+        return ResponseEntity.ok(updateAccount);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<Account> updateAuthentication(
             @PathVariable(value = "id") Long authId,  // Ensure this matches the path

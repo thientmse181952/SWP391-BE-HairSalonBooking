@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Account;
+import com.example.demo.entity.Stylist;
 import com.example.demo.exception.DuplicateEntity;
 import com.example.demo.exception.NotFoundException;
 import com.example.demo.model.*;
@@ -83,6 +84,11 @@ public class AuthenticationService implements UserDetailsService {
     public List<Account> getAllAccount() {
         List<Account> accounts = accountRepository.findAll();
         return accounts;
+    }
+
+    public Account getAccountById(Long accountId) {
+        return accountRepository.findById(accountId).orElseThrow(() -> new NotFoundException("Account not found"));
+
     }
 
     public AccountResponse login(LoginRequest loginRequest) {

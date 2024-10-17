@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Account;
+import com.example.demo.entity.Booking;
 import com.example.demo.entity.ServiceofStylist;
 import com.example.demo.entity.Stylist;
 import com.example.demo.exception.DuplicateEntity;
@@ -29,9 +30,6 @@ public class StylistService {
     AuthenticationService authenticationService;
 
     @Autowired
-    HairService hairService;
-
-    @Autowired
     HairServiceRepository hairServiceRepository;
 
     public Stylist createNewStylist(StylistRequest stylistRequest) {
@@ -56,9 +54,13 @@ public class StylistService {
         }
 
     }
-   public List<Stylist> getAllStylist() {
-        List<Stylist> stylists = stylistRepository.findStylistsByIsDeletedFalse();
-        return stylists;
+    public List<Stylist> getAllStylists() {
+        return stylistRepository.findAll();
+    }
+
+    public Stylist getStylistById(Long stylistId) {
+        return stylistRepository.findById(stylistId).orElseThrow(() -> new NotFoundException("Stylist not found"));
+
     }
 
 public Stylist updateStylist(Stylist stylist, long stylistId) {

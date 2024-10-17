@@ -1,6 +1,7 @@
 package com.example.demo.api;
 
 import com.example.demo.entity.Booking;
+import com.example.demo.model.BookingRequest;
 import com.example.demo.service.BookingService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
@@ -31,7 +32,7 @@ public class BookingAPI {
     }
 
     @PostMapping("/createBooking")
-    public ResponseEntity<Booking> createBooking(@Valid @RequestBody Booking booking) {
+    public ResponseEntity<Booking> createBooking(@Valid @RequestBody BookingRequest booking) {
         Booking newBooking = bookingService.createBooking(booking);
         return ResponseEntity.ok(newBooking);
     }

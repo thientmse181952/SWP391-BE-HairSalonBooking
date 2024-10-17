@@ -1,6 +1,7 @@
 package com.example.demo.api;
 
 
+import com.example.demo.entity.Booking;
 import com.example.demo.entity.Customer;
 import com.example.demo.entity.Stylist;
 import com.example.demo.model.StylistRequest;
@@ -28,11 +29,17 @@ public ResponseEntity<Stylist> create(@Valid @RequestBody StylistRequest stylist
    Stylist newStylist =stylistService.createNewStylist(stylist);
    return ResponseEntity.ok(newStylist);
 }
-@GetMapping("getStylist")
+@GetMapping("getAllStylist")
     public ResponseEntity get() {
-    List<Stylist> stylistList = stylistService.getAllStylist();
+    List<Stylist> stylistList = stylistService.getAllStylists();
     return ResponseEntity.ok(stylistList);
 }
+
+@GetMapping("/{styListId}")
+    public ResponseEntity<Stylist> getStylistById(@PathVariable Long styListId) {
+        Stylist stylist = stylistService.getStylistById(styListId);
+        return ResponseEntity.ok(stylist);
+    }
 @PutMapping("{id}")
     public ResponseEntity<Stylist> updateStylist (@Valid @RequestBody Stylist stylist, @PathVariable long id) {
     Stylist newStylist = stylistService.updateStylist(stylist, id);

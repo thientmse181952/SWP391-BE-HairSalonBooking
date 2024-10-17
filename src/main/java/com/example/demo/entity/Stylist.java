@@ -27,10 +27,11 @@ public class Stylist {
     String image;
 
 
+
    @ManyToMany
            @JoinTable(name = "service_class",
                    joinColumns = @JoinColumn(name = "stylist_id"),
-                   inverseJoinColumns = @JoinColumn(name = "serviceofStylist_id")
+                   inverseJoinColumns = @JoinColumn(name = "service_id")
 
 
            )
@@ -42,5 +43,7 @@ public class Stylist {
     @JoinColumn(name = "account_id")
     @JsonIgnore
     Account account;
+
+
 
 }

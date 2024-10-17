@@ -39,9 +39,24 @@ public class Filter extends OncePerRequestFilter {
             "/api/category/getCategory",
             "/api/collection/getCollection",
             "/api/service/getService",
-            "/api/stylist/getStylist",
+            "/api/stylist/getAllStylist",
             "/api/collection/getCollection",
-            "/api/bookings/createBooking"
+            "/api/bookings/createBooking",
+            "/api/service/{getServiceId}",
+            "/api/stylist/{styListId}",
+            "/api/payment/createPayment",
+            "/api/payment/{paymentId}",
+            "/api/payment/{paymentId}",
+            "/api/payment/getAllPayment",
+            "/api/feedback/getAllFeedback",
+            "/api/feedback/{feedbackId}",
+            "/api/feedback/createFeedback",
+            "/api/feedback/{feedbackId}",
+            "/api/bookings/{bookingId}",
+            "/api/bookings/{bookingId}",
+            "/api/bookings/{bookingId}",
+            "/api/bookings/createBooking",
+            "/api/bookings/getBooking"
 
 
 

@@ -42,4 +42,8 @@ public class ServiceofStylist {
     @ManyToMany(mappedBy = "serviceofStylists")
     Set<Stylist> stylists;
 
+    @ManyToMany(mappedBy = "serviceofStylists")
+    Set<Booking> bookings;
+
+
 }

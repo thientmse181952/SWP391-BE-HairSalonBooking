@@ -44,7 +44,7 @@ public class AuthenticationAPI {
         Account updateAccount = authenticationService.getAccountById(accountId);
         return ResponseEntity.ok(updateAccount);
     }
-
+    
     @PutMapping("/{id}")
     public ResponseEntity<Account> updateAuthentication(
             @PathVariable(value = "id") Long authId,  // Ensure this matches the path

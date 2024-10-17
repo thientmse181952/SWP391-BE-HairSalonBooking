@@ -1,5 +1,6 @@
 package com.example.demo.api;
 
+import com.example.demo.entity.CategoryCollection;
 import com.example.demo.entity.CustomCollection;
 
 import com.example.demo.entity.Customer;
@@ -30,6 +31,12 @@ public class CollectionAPI {
     public ResponseEntity getCollections() {
         List<CustomCollection> collectiontList = collectionService.getAll();
         return ResponseEntity.ok(collectiontList);
+    }
+
+    @GetMapping("/{collectionId}")
+    public ResponseEntity<CustomCollection> getCollection(@PathVariable long collectionId) {
+        CustomCollection customCollection = collectionService.getCollectionId(collectionId);
+        return ResponseEntity.ok(customCollection);
     }
 
 

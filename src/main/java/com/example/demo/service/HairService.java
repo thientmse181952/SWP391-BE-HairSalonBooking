@@ -4,6 +4,7 @@ import com.example.demo.entity.ServiceofStylist;
 import com.example.demo.entity.Stylist;
 import com.example.demo.exception.DuplicateEntity;
 import com.example.demo.exception.NotFoundException;
+import com.example.demo.model.HairServiceRequest;
 import com.example.demo.model.ServiceRequest;
 import com.example.demo.repository.HairServiceRepository;
 import com.example.demo.repository.StylistRepository;
@@ -37,7 +38,7 @@ public class HairService {
 
     }
 
-    public ServiceofStylist createNewService(ServiceRequest serviceRequest) {
+    public ServiceofStylist createNewService(HairServiceRequest serviceRequest) {
         ServiceofStylist newservice = modelMapper.map(serviceRequest, ServiceofStylist.class);
 
 
@@ -49,6 +50,9 @@ public class HairService {
         }
 
     }
+
+
+
     public ServiceofStylist updateService(ServiceofStylist serviceofHair, long serivceofHairId) {
 
         ServiceofStylist oldServiceofHair = hairServiceRepository.findServiceById(serivceofHairId);

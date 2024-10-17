@@ -2,12 +2,16 @@ package com.example.demo.model;
 
 import com.example.demo.entity.Category;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
-public class ServiceRequest {
+public class HairServiceRequest {
+
     @JsonIgnore
     boolean isDeleted = false;
 
@@ -31,4 +35,9 @@ public class ServiceRequest {
     @ManyToOne
     @JoinColumn(name = "category", nullable = false)
     Category category;
+
+
+    
+
+
 }

@@ -30,8 +30,6 @@ public class ServiceofStylist {
     @NotBlank(message = "Category can't be blank!")
     String duration;
 
-    @NotBlank(message = "Category can't be blank!")
-    String category;
 
     @NotBlank(message = "Category can't be blank!")
     String serviceImage;
@@ -44,6 +42,11 @@ public class ServiceofStylist {
 
     @ManyToMany(mappedBy = "serviceofStylists")
     Set<Booking> bookings;
+
+    @ManyToOne
+    @JoinColumn(name = "category", nullable = false)
+    Category category;
+
 
 
 }

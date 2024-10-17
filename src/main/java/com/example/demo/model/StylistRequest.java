@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import com.example.demo.entity.Account;
+import com.example.demo.entity.Category;
 import com.example.demo.entity.ServiceofStylist;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -23,7 +24,7 @@ public class StylistRequest {
     //id, image, isdeleted, rating
 
     List<Long> service_id;
-    
+
 
 
 }

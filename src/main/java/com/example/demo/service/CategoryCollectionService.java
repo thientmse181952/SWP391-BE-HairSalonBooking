@@ -1,56 +1,61 @@
-//package com.example.demo.service;
-//
-//import com.example.demo.entity.CategoryCollection;
-//import com.example.demo.exception.DuplicateEntity;
-//import com.example.demo.exception.NotFoundException;
-//import com.example.demo.repository.CategoryCollectionRepository;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.stereotype.Service;
-//
-//import java.util.List;
-//
-//@Service
-//public class CategoryCollectionService {
-//
-//    @Autowired
-//    CategoryCollectionRepository selectServiceRepository;
-//
-//    public List<CategoryCollection> getCategoryByType(String type) {
-//        List<CategoryCollection> categoryCollections = selectServiceRepository.findByType("someType");
-//        return selectServiceRepository.findByType(type);
-//    }
+package com.example.demo.service;
 
-//    public CategoryCollection createNewSelectService(CategoryCollection select) {
-//        try{
-//            CategoryCollection newSelect = selectServiceRepository.save(select);
-//            return newSelect;
-//        }catch(Exception e){
-//                  throw new DuplicateEntity("Duplicate select found");
-//        }
-//
-//    }
-//   public List<CategoryCollection> getAllSelect() {
-//        List<CategoryCollection> select = selectServiceRepository.findServiceByIsDeletedFalse();
-//        return select;
-//    }
-//
-//public CategoryCollection update(CategoryCollection select, long selectedId) {
-//
-//    CategoryCollection oldSelect = selectServiceRepository.findServiceById(selectedId);
-//    if (oldSelect == null) {
-//        throw new NotFoundException("Select not found");
-//    }
-//    oldSelect.setNameCategory(select.getNameCategory());
-//    oldSelect.setDeleted(select.isDeleted());
-//    return selectServiceRepository.save(oldSelect);
-//}
-//  public CategoryCollection delete(long selectedId) {
-//      CategoryCollection oldSelect = selectServiceRepository.findServiceById(selectedId);
-//      if (oldSelect == null) {
-//          throw new NotFoundException("Select not found");
-//      }
-//      oldSelect.setDeleted(true);
-//      return selectServiceRepository.save(oldSelect);
-//  }
+import com.example.demo.entity.Booking;
+import com.example.demo.entity.CategoryCollection;
+import com.example.demo.entity.CustomCollection;
+import com.example.demo.entity.ServiceofStylist;
+import com.example.demo.exception.DuplicateEntity;
+import com.example.demo.exception.NotFoundException;
+import com.example.demo.model.BookingRequest;
+import com.example.demo.repository.*;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+@Service
+public class CategoryCollectionService {
+
+    @Autowired
+    CategoryCollectionRepository categoryCollectionRepository;
+
+    @Autowired
+    ModelMapper modelMapper;
 
 
+    public CategoryCollection getCategoryById(Long categoryId) {
+        return categoryCollectionRepository.findById(categoryId)
+                .orElseThrow(() -> new NotFoundException("Booking not found with ID: " + categoryId));
+    }
+
+    public CategoryCollection createCategory(CategoryCollection categoryCollection) {
+
+        try{
+            CategoryCollection newCategory = categoryCollectionRepository.save(categoryCollection);
+            return newCategory;
+        }catch(Exception e){
+            throw new DuplicateEntity("Duplicate category found");
+        }
+    }
+    public CategoryCollection updateCategory(CategoryCollection categoryCollection, long categoryId) {
+
+        CategoryCollection oldCategory = categoryCollectionRepository.findCategoryCollectionById(categoryId);
+        if (oldCategory == null) {
+            throw new NotFoundException("Category not found");
+        }
+       oldCategory.setNameCategory(categoryCollection.getNameCategory());
+        return categoryCollectionRepository.save(oldCategory);
+    }
+
+    public CategoryCollection deleteCategory(long categoryId) {
+        CategoryCollection categoryCollection = categoryCollectionRepository.findCategoryCollectionById(categoryId);
+        if (categoryCollection == null) {
+            throw new NotFoundException("Collections not found");
+        }
+        categoryCollection.setDeleted(true);
+        return categoryCollectionRepository.save(categoryCollection);
+    }
+}

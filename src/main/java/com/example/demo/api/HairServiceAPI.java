@@ -2,6 +2,7 @@ package com.example.demo.api;
 
 import com.example.demo.entity.Booking;
 import com.example.demo.entity.ServiceofStylist;
+import com.example.demo.model.HairServiceRequest;
 import com.example.demo.model.ServiceRequest;
 import com.example.demo.service.HairService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -20,7 +21,7 @@ public class HairServiceAPI {
     HairService hairService;
 
     @PostMapping
-    public ResponseEntity<ServiceofStylist> createService(@Valid @RequestBody ServiceRequest serviceofHair) {
+    public ResponseEntity<ServiceofStylist> createService(@Valid @RequestBody HairServiceRequest serviceofHair) {
         ServiceofStylist newServiceofHair =hairService.createNewService(serviceofHair);
         return ResponseEntity.ok(newServiceofHair);
     }

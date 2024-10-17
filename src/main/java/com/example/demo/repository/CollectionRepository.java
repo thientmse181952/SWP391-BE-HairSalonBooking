@@ -9,6 +9,7 @@ public interface CollectionRepository extends JpaRepository<CustomCollection, Lo
 
 
     CustomCollection findCustomCollectionById(long id);
-
     List<CustomCollection> findServiceByIsDeletedFalse();
+
+
 }

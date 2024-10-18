@@ -186,7 +186,6 @@ public class AuthenticationService implements UserDetailsService {
     public void resetPassword(ResetPasswordRequest resetPasswordRequest) {
         String phoneNumber = resetPasswordRequest.getPhoneNumber();
         String otp = resetPasswordRequest.getOtp();
-        String currentPassword = resetPasswordRequest.getCurrentPassword();
         String newPassword = resetPasswordRequest.getNewPassword();
         String confirmPassword = resetPasswordRequest.getConfirmPassword();
 

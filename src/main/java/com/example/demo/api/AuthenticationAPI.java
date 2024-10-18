@@ -80,7 +80,7 @@ public class AuthenticationAPI {
         }
 
 }
-    @PostMapping("request-reset-password")
+    @PostMapping("request-otp")
     public ResponseEntity<String> requestResetPassword(@Valid @RequestBody OtpRequest otpRequest) {
         try {
             // Gọi tới dịch vụ để gửi OTP và lấy lại

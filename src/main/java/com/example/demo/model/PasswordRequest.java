@@ -1,18 +1,23 @@
 package com.example.demo.model;
 
 import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 public class PasswordRequest {
+    @NotBlank(message = "Phone number is required.")
+    String phoneNumber;
+
     @NotBlank(message = "Current password is required.")
-    private String currentPassword;
+    String currentPassword;
 
     @NotBlank(message = "New password is required.")
-    private String newPassword;
+    String newPassword;
 
     @NotBlank(message = "Confirm password is required.")
-    private String confirmPassword;
+    String confirmPassword;
+
+
 }

@@ -1,12 +1,11 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Account;
-import com.example.demo.entity.Stylist;
 import com.example.demo.exception.DuplicateEntity;
 import com.example.demo.exception.NotFoundException;
 import com.example.demo.model.*;
 import com.example.demo.repository.AccountRepository;
-import com.example.demo.repository.CustomerRepository;
+import jakarta.validation.constraints.NotBlank;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,10 +15,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 @Service
 public class AuthenticationService implements UserDetailsService {
@@ -41,6 +44,17 @@ public class AuthenticationService implements UserDetailsService {
 
     @Autowired
     EmailService emailService;
+    // Temporary store for OTPs
+    private Map<String, String> otpStore = new HashMap<>();
+    private Map<String, Long> otpExpirationStore = new HashMap<>();
+
+    // Define the expiration time for OTPs (e.g., 5 minutes)
+    private static final long OTP_EXPIRATION_TIME = 300000; // in milliseconds
+
+    private boolean isOtpExpired(Long expirationTime) {
+        return expirationTime == null || System.currentTimeMillis() > expirationTime;
+    }
+
 
 
     public AccountResponse register(RegisterRequest registerRequest) {
@@ -126,24 +140,84 @@ public class AuthenticationService implements UserDetailsService {
 
         return accountRepository.save(auth);
     }
-    public void changePassword(String currentPassword, String newPassword, String confirmPassword) {
-        // Get the current authenticated account
-        Account account = getCurrentAccount();
 
-        // Verify that the current password matches the one in the database
-        if (!passwordEncoder.matches(currentPassword, account.getPassword())) {
+    public void changePassword(String phoneNumber, String currentPassword, String newPassword, String confirmPassword) {
+        // Tìm người dùng theo số điện thoại
+        Account user = accountRepository.findAccountByPhone(phoneNumber); // Updated to use Account class
+        if (user == null) {
+            throw new IllegalArgumentException("User not found."); // Handle user not found case
+        }
+
+        // Xác minh mật khẩu hiện tại
+        if (!passwordEncoder.matches(currentPassword, user.getPassword())) {
             throw new IllegalArgumentException("Current password is incorrect.");
         }
 
-        // Verify that the new password matches the confirm password
+        // Kiểm tra xem mật khẩu mới có khớp với mật khẩu xác nhận không
         if (!newPassword.equals(confirmPassword)) {
             throw new IllegalArgumentException("New password and confirm password do not match.");
         }
 
-        // Set the new password and save the account
-        account.setPassword(passwordEncoder.encode(newPassword));
-        accountRepository.save(account);
+        // Cập nhật mật khẩu
+        user.setPassword(passwordEncoder.encode(newPassword)); // Lưu trữ mật khẩu mới đã đổi
+        accountRepository.save(user); // Đã cập nhật để sử dụng AccountRepository
+    }
+    // Phương pháp tạo OTP 6 chữ số ngẫu nhiên
+    private String generateOtp() {
+        return String.format("%06d", new Random().nextInt(999999));
     }
 
+    // Phương thức gửi OTP tới số điện thoại của người dùng
+    private void sendOtpToPhoneNumber(String phoneNumber, String otp) {
+        // Mô phỏng gửi OTP (thay thế bằng logic gửi SMS thực tế)
+        System.out.println("Sending OTP " + otp + " to phone number: " + phoneNumber);
+    }
+
+    // Phương pháp gửi OTP để reset mật khẩu
+    public String sendResetPasswordOtp(String phoneNumber) {
+        String otp = generateOtp(); // Giả sử có phương pháp tạo OTP
+        otpStore.put(phoneNumber, otp);
+        otpExpirationStore.put(phoneNumber, System.currentTimeMillis() + OTP_EXPIRATION_TIME);
+        sendOtpToPhoneNumber(phoneNumber, otp);
+        return otp; // Trả về OTP đã tạo
+    }
+
+    // Phương pháp đặt lại mật khẩu (được xác định trước đó)
+    public void resetPassword(ResetPasswordRequest resetPasswordRequest) {
+        String phoneNumber = resetPasswordRequest.getPhoneNumber();
+        String otp = resetPasswordRequest.getOtp();
+        String currentPassword = resetPasswordRequest.getCurrentPassword();
+        String newPassword = resetPasswordRequest.getNewPassword();
+        String confirmPassword = resetPasswordRequest.getConfirmPassword();
+
+        // Xác thực OTP
+        String storedOtp = otpStore.get(phoneNumber);
+        Long expirationTime = otpExpirationStore.get(phoneNumber);
+
+        // Kiểm tra OTP có hợp lệ và chưa hết hạn không
+        if (storedOtp == null || !storedOtp.equals(otp) || isOtpExpired(expirationTime)) {
+            throw new IllegalArgumentException("Invalid or expired OTP.");
+        }
+
+        // Tìm người dùng theo số điện thoại
+        Account user = accountRepository.findAccountByPhone(phoneNumber);
+        if (user == null) {
+            throw new IllegalArgumentException("User not found."); // Handle user not found case
+        }
+
+
+        // Kiểm tra xem mật khẩu mới có khớp với mật khẩu xác nhận không
+        if (!newPassword.equals(confirmPassword)) {
+            throw new IllegalArgumentException("New password and confirm password do not match.");
+        }
+
+        // Cập nhật mật khẩu
+        user.setPassword(passwordEncoder.encode(newPassword)); // Lưu trữ mật khẩu mới đã đô
+        accountRepository.save(user); // Lưu người dùng đã cập nhật
+
+        // Tùy chọn, xóa OTP sau khi xác thực thành công
+        otpStore.remove(phoneNumber);
+        otpExpirationStore.remove(phoneNumber);
+    }
 
 }

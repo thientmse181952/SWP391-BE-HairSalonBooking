@@ -3,6 +3,7 @@ package com.example.demo.api;
 import com.example.demo.entity.Schedule;
 import com.example.demo.exception.NotFoundException;
 import com.example.demo.service.ScheduleService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@SecurityRequirement(name = "api")
 @RestController
 @RequestMapping("/api/schedules")
 public class ScheduleAPI {

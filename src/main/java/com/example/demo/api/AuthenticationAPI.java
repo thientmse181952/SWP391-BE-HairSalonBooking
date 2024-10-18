@@ -6,6 +6,7 @@ import com.example.demo.service.AuthenticationService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -47,35 +48,52 @@ public class AuthenticationAPI {
     
     @PutMapping("/{id}")
     public ResponseEntity<Account> updateAuthentication(
-            @PathVariable(value = "id") Long authId,  // Ensure this matches the path
+            @PathVariable(value = "id") Long authId,  // Đảm bảo điều này phù hợp với đường dẫn
             @RequestBody @Validated ChangInforRequest request) {
         Account updatedAuth = authenticationService.updateAuthentication(authId, request);
         return ResponseEntity.ok(updatedAuth);
     }
     @PutMapping("password")
-    public ResponseEntity changePassword(@Valid @RequestBody PasswordRequest passwordRequest) {
+    public ResponseEntity<String> changePassword(@Valid @RequestBody PasswordRequest passwordRequest) {
         try {
-            // Call the service layer to change the password
+            // Gọi lớp dịch vụ để thay đổi mật khẩu
             authenticationService.changePassword(
+                    passwordRequest.getPhoneNumber(),
                     passwordRequest.getCurrentPassword(),
                     passwordRequest.getNewPassword(),
                     passwordRequest.getConfirmPassword()
             );
             return ResponseEntity.ok("Password updated successfully.");
         } catch (IllegalArgumentException e) {
-            // Check if the error is specifically about mismatched passwords
+            // Kiểm tra xem lỗi có phải cụ thể là về mật khẩu không khớp không
             if (e.getMessage().equals("New password and confirm password do not match.")) {
                 return ResponseEntity.badRequest().body("Error: New password and confirm password do not match.");
             } else if (e.getMessage().equals("Current password is incorrect.")) {
                 return ResponseEntity.badRequest().body("Error: Current password is incorrect.");
             } else {
-                // Handle other potential issues with a generic error message
+                // Xử lý các sự cố tiềm ẩn khác bằng thông báo lỗi chung
                 return ResponseEntity.badRequest().body(e.getMessage());
             }
         } catch (Exception e) {
-            // Handle any unexpected errors
+            // Xử lý mọi lỗi không mong muốn
             return ResponseEntity.status(500).body("An error occurred while updating the password.");
+        }
+
+}
+    @PostMapping("request-reset-password")
+    public ResponseEntity<String> requestResetPassword(@Valid @RequestBody OtpRequest otpRequest) {
+        try {
+            // Gọi tới dịch vụ để gửi OTP và lấy lại
+            String otp = authenticationService.sendResetPasswordOtp(otpRequest.getPhoneNumber());
+            return ResponseEntity.ok("OTP sent is: " + otp); // Trả lại OTP trong tin nhắn
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error sending OTP: " + e.getMessage());
         }
     }
 
+    @PostMapping("reset-password")
+    public ResponseEntity<String> resetPassword(@Valid @RequestBody ResetPasswordRequest resetPasswordRequest) {
+        authenticationService.resetPassword(resetPasswordRequest);
+        return ResponseEntity.ok("Password reset successfully.");
+    }
 }

@@ -56,10 +56,7 @@ public class Filter extends OncePerRequestFilter {
             "/api/bookings/{bookingId}",
             "/api/bookings/{bookingId}",
             "/api/bookings/createBooking",
-            "/api/bookings/getBooking",
-            "/api/request-otp",
-            "/api/reset-password"
-            
+            "/api/bookings/getBooking"
 
 
 

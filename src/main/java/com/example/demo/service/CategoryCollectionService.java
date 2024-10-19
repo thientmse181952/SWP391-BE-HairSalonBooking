@@ -40,6 +40,10 @@ public class CategoryCollectionService {
             throw new DuplicateEntity("Duplicate category found");
         }
     }
+    public List<CategoryCollection> getAll() {
+        List<CategoryCollection> categoryCollections = categoryCollectionRepository.findCategoryCollectionByIsDeletedFalse();
+        return categoryCollections;
+    }
     public CategoryCollection updateCategory(CategoryCollection categoryCollection, long categoryId) {
 
         CategoryCollection oldCategory = categoryCollectionRepository.findCategoryCollectionById(categoryId);

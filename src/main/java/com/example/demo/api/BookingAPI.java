@@ -42,6 +42,11 @@ public class BookingAPI {
         Booking updatedBooking = bookingService.updateBooking(bookingId, booking);
         return ResponseEntity.ok(updatedBooking);
     }
+    @PutMapping("/{bookingId}/status")
+    public ResponseEntity<Booking> updateStatus(@PathVariable Long bookingId, @RequestBody String newStatus) {
+        Booking updatedBooking = bookingService.updateBookingStatus(bookingId, newStatus);
+        return ResponseEntity.ok(updatedBooking);
+    }
 
     @DeleteMapping("/{bookingId}")
     public ResponseEntity<?> deleteBooking(@PathVariable Long bookingId) {

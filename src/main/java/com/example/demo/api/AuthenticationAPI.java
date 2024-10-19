@@ -53,34 +53,35 @@ public class AuthenticationAPI {
         Account updatedAuth = authenticationService.updateAuthentication(authId, request);
         return ResponseEntity.ok(updatedAuth);
     }
-    @PutMapping("password")
-    public ResponseEntity<String> changePassword(@Valid @RequestBody PasswordRequest passwordRequest) {
+    @PutMapping("change-password")
+    public ResponseEntity<String> changePassword(@RequestBody PasswordRequest passwordRequest) {
         try {
-            // Gọi lớp dịch vụ để thay đổi mật khẩu
             authenticationService.changePassword(
-                    passwordRequest.getPhoneNumber(),
                     passwordRequest.getCurrentPassword(),
                     passwordRequest.getNewPassword(),
                     passwordRequest.getConfirmPassword()
             );
             return ResponseEntity.ok("Password updated successfully.");
         } catch (IllegalArgumentException e) {
-            // Kiểm tra xem lỗi có phải cụ thể là về mật khẩu không khớp không
+            // Check if the error is specifically about mismatched passwords
             if (e.getMessage().equals("New password and confirm password do not match.")) {
                 return ResponseEntity.badRequest().body("Error: New password and confirm password do not match.");
             } else if (e.getMessage().equals("Current password is incorrect.")) {
                 return ResponseEntity.badRequest().body("Error: Current password is incorrect.");
-            } else {
-                // Xử lý các sự cố tiềm ẩn khác bằng thông báo lỗi chung
+            }
+            else if (e.getMessage().equals("New password cannot be the same as the current password.")) {
+                return ResponseEntity.badRequest().body("Error: New password cannot be the same as the current password.");
+            }else {
+                // Handle other potential issues with a generic error message
                 return ResponseEntity.badRequest().body(e.getMessage());
             }
         } catch (Exception e) {
-            // Xử lý mọi lỗi không mong muốn
+            // Handle any unexpected errors
             return ResponseEntity.status(500).body("An error occurred while updating the password.");
         }
 
 }
-    @PostMapping("request-otp")
+    @PostMapping("request-reset-password")
     public ResponseEntity<String> requestResetPassword(@Valid @RequestBody OtpRequest otpRequest) {
         try {
             // Gọi tới dịch vụ để gửi OTP và lấy lại

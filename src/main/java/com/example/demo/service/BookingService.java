@@ -75,9 +75,14 @@ public class BookingService {
         existingBooking.setStatus(updatedBooking.getStatus());
         return bookingRepository.save(existingBooking);
     }
-
+    public Booking updateBookingStatus(Long bookingId, String newStatus) {
+        Booking existingBooking = getBookingById(bookingId);
+        existingBooking.setStatus(newStatus);
+        return bookingRepository.save(existingBooking);
+    }
     public void deleteBooking(Long bookingId) {
         Booking existingBooking = getBookingById(bookingId);
         bookingRepository.delete(existingBooking);
     }
+
 }

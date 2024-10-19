@@ -17,14 +17,9 @@ public class Feedback {
 
     String comment;
 
-    @ManyToOne
-    @JoinColumn(name = "stylist_id", nullable = false)
-    Stylist stylist;
-
-    @ManyToOne
-    @JoinColumn(name = "customer_id", nullable = false)
-    Customer customer;
-
+    @OneToOne
+    @JoinColumn(name = "booking_id", nullable = false)
+    Booking booking;
 
 
    }

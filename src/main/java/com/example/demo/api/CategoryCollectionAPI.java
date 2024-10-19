@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/category-collection")
 @SecurityRequirement(name = "api")
@@ -27,6 +29,11 @@ public ResponseEntity<CategoryCollection> create(@Valid @RequestBody CategoryCol
     public ResponseEntity<CategoryCollection> getCategory(@PathVariable Long categoryServiceId) {
         CategoryCollection categoryCollection = categoryCollectionService.getCategoryById(categoryServiceId);
         return ResponseEntity.ok(categoryCollection);
+    }
+@GetMapping("/getCollection")
+    public ResponseEntity getCollections() {
+        List<CategoryCollection> categoryCollections = categoryCollectionService.getAll();
+        return ResponseEntity.ok(categoryCollections);
     }
 @PutMapping("{categoryId}")
     public ResponseEntity<CategoryCollection> updateCategory (@Valid @RequestBody CategoryCollection categoryCollection, @PathVariable long categoryId) {

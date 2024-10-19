@@ -5,7 +5,6 @@ import com.example.demo.exception.DuplicateEntity;
 import com.example.demo.exception.NotFoundException;
 import com.example.demo.model.*;
 import com.example.demo.repository.AccountRepository;
-import jakarta.validation.constraints.NotBlank;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,7 +14,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -141,26 +139,28 @@ public class AuthenticationService implements UserDetailsService {
         return accountRepository.save(auth);
     }
 
-    public void changePassword(String phoneNumber, String currentPassword, String newPassword, String confirmPassword) {
-        // Tìm người dùng theo số điện thoại
-        Account user = accountRepository.findAccountByPhone(phoneNumber); // Updated to use Account class
-        if (user == null) {
-            throw new IllegalArgumentException("User not found."); // Handle user not found case
-        }
+    public void changePassword(String currentPassword, String newPassword, String confirmPassword) {
+        // Get the current authenticated account
+        Account account = getCurrentAccount();
 
-        // Xác minh mật khẩu hiện tại
-        if (!passwordEncoder.matches(currentPassword, user.getPassword())) {
+        // Verify that the current password matches the one in the database
+        if (!passwordEncoder.matches(currentPassword, account.getPassword())) {
             throw new IllegalArgumentException("Current password is incorrect.");
         }
 
-        // Kiểm tra xem mật khẩu mới có khớp với mật khẩu xác nhận không
+        // Verify that the new password matches the confirm password
         if (!newPassword.equals(confirmPassword)) {
             throw new IllegalArgumentException("New password and confirm password do not match.");
         }
+        // Check if the new password is the same as the current password
+        if (newPassword.equals(currentPassword)) {
+            throw new IllegalArgumentException("New password cannot be the same as the current password.");
+        }
 
-        // Cập nhật mật khẩu
-        user.setPassword(passwordEncoder.encode(newPassword)); // Lưu trữ mật khẩu mới đã đổi
-        accountRepository.save(user); // Đã cập nhật để sử dụng AccountRepository
+
+        // Set the new password and save the account
+        account.setPassword(passwordEncoder.encode(newPassword));
+        accountRepository.save(account);
     }
     // Phương pháp tạo OTP 6 chữ số ngẫu nhiên
     private String generateOtp() {

@@ -33,8 +33,6 @@ public class FeedbackService {
         Feedback newFeedback = getFeedbackById(feebackId);
         newFeedback.setComment(updatedFeedback.getComment());
         newFeedback.setRating_stylist(updatedFeedback.getRating_stylist());
-        newFeedback.setCustomer(updatedFeedback.getCustomer());
-        newFeedback.setStylist(updatedFeedback.getStylist());
 
 
 

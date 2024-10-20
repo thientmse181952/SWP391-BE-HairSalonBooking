@@ -11,7 +11,7 @@ import java.util.List;
 
 @Data
 public class PaymentRequest {
-
+    Long paymentId;
     String amount;
     String payment_date;
     String payment_type;
@@ -23,6 +23,6 @@ public class PaymentRequest {
     @JsonIgnore
     boolean isDeleted = false;
 
-    List<Long> booking_id;
+    List<Long> bookingId;
 
 }

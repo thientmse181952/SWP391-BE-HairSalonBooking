@@ -24,8 +24,7 @@ public class Customer {
     @JoinColumn(name = "account_id")
     @JsonIgnore
     Account account;
-    private String phoneNumber;
-    private String password;
+
 
 
 

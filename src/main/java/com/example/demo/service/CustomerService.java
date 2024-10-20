@@ -51,6 +51,10 @@ public class CustomerService {
         List<Customer> customers = customerRepository.findCustomersByIsDeletedFalse();
         return customers;
     }
+    public Customer getCustomerId(Long customerId) {
+        return customerRepository.findById(customerId).orElseThrow(() -> new NotFoundException("Customer not found"));
+
+    }
 
 public Customer updateCustomer(Customer customer, long customerId) {
 

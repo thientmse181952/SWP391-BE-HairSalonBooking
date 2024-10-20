@@ -32,6 +32,11 @@ public ResponseEntity<Customer> create(@Valid @RequestBody CustomerRequest custo
     List<Customer> customerList = customerService.getAllCustomers();
     return ResponseEntity.ok(customerList);
 }
+    @GetMapping("/{id}")
+    public ResponseEntity<Customer> getCustomerId(@PathVariable long id) {
+        Customer customer = customerService.getCustomerId(id);
+        return ResponseEntity.ok(customer);
+    }
 @PutMapping("{id}")
     public ResponseEntity<Customer> updateCustomer (@Valid @RequestBody Customer customer, @PathVariable long id) {
     Customer newCustomer =customerService.updateCustomer(customer, id);

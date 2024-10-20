@@ -13,5 +13,5 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
     // lấy danh sách những thằng student mà isDeleted = false
     List<Customer> findCustomersByIsDeletedFalse();
-    Customer findByPhoneNumber(String phoneNumber);
+
 }

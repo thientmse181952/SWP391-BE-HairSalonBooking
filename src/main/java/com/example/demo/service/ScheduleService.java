@@ -36,6 +36,11 @@ public class ScheduleService {
         return scheduleRepository.findAll();
     }
 
+    public Schedule getScheduleId(Long scheduleId) {
+        return scheduleRepository.findById(scheduleId)
+                .orElseThrow(() -> new NotFoundException("Booking not found with ID: " + scheduleId));
+    }
+
     public Schedule updateSchedule(Schedule schedule, Long scheduleId) {
         Schedule existingSchedule = scheduleRepository.findById(scheduleId)
                 .orElseThrow(() -> new NotFoundException("Schedule not found"));
@@ -49,6 +54,12 @@ public class ScheduleService {
 
 
         return scheduleRepository.save(existingSchedule);
+    }
+
+    public Schedule updateScheduleStatus(Long scheduleId, String newStatus) {
+        Schedule existingBooking = getScheduleId(scheduleId);
+        existingBooking.setStatus(newStatus);
+        return scheduleRepository.save(existingBooking);
     }
 
     public void deleteSchedule(Long scheduleId) {

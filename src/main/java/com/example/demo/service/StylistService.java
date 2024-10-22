@@ -71,7 +71,6 @@ public Stylist updateStylist(StylistRequest stylistRequest, long stylistId) {
         ServiceofStylist serviceofStylist = hairServiceRepository.findById(idService).orElseThrow(() -> new NotFoundException("Service not found"));
         serviceofStylists.add(serviceofStylist);
     }
-
     Stylist oldStylist = stylistRepository.findStylistsById(stylistId);
     if (oldStylist == null) {
         throw new NotFoundException("Stylist not found");
@@ -81,6 +80,13 @@ public Stylist updateStylist(StylistRequest stylistRequest, long stylistId) {
 
     return stylistRepository.save(oldStylist);
 }
+
+    public Stylist updateRating(Long stylistId, String newRating) {
+        Stylist existingBooking = getStylistById(stylistId);
+        existingBooking.setRating(newRating);
+        return stylistRepository.save(existingBooking);
+    }
+
   public Stylist deleteStylist(long stylistId) {
       Stylist oldStylist = stylistRepository.findStylistsById(stylistId);
       if (oldStylist == null) {

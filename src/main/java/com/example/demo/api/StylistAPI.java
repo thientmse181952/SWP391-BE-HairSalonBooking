@@ -45,6 +45,12 @@ public ResponseEntity<Stylist> create(@Valid @RequestBody StylistRequest stylist
     Stylist newStylist = stylistService.updateStylist(stylist, id);
     return ResponseEntity.ok(newStylist);
 }
+
+@PutMapping("/{stylistId}/rating")
+    public ResponseEntity<Stylist> updateRating(@PathVariable Long stylistId, @RequestBody String newRating) {
+        Stylist updateStylist = stylistService.updateRating(stylistId, newRating);
+        return ResponseEntity.ok(updateStylist);
+    }
 @DeleteMapping("{id}")
     public ResponseEntity<Stylist> deleteStylist(@PathVariable long id) {
     Stylist stylist = stylistService.deleteStylist(id);

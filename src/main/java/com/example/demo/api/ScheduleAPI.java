@@ -1,5 +1,6 @@
 package com.example.demo.api;
 
+import com.example.demo.entity.Booking;
 import com.example.demo.entity.Schedule;
 import com.example.demo.exception.NotFoundException;
 import com.example.demo.model.ScheduleRequest;
@@ -41,6 +42,13 @@ public class ScheduleAPI {
             return new ResponseEntity<>("Schedule not found", HttpStatus.NOT_FOUND);
         }
     }
+
+    @PutMapping("/{scheduleId}/status")
+    public ResponseEntity<Schedule> updateStatus(@PathVariable Long scheduleId, @RequestBody String newStatus) {
+        Schedule updateSchedule = scheduleService.updateScheduleStatus(scheduleId, newStatus);
+        return ResponseEntity.ok(updateSchedule);
+    }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteSchedule(@PathVariable Long id) {

@@ -2,6 +2,7 @@ package com.example.demo.api;
 
 import com.example.demo.entity.Booking;
 import com.example.demo.model.BookingRequest;
+import com.example.demo.model.BookingRequest2;
 import com.example.demo.service.BookingService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
@@ -47,6 +48,13 @@ public class BookingAPI {
         Booking updatedBooking = bookingService.updateBookingStatus(bookingId, newStatus);
         return ResponseEntity.ok(updatedBooking);
     }
+
+    @PutMapping("/{bookingId}/stylist")
+    public ResponseEntity<Booking> updateStylist(@PathVariable Long bookingId, @Valid @RequestBody BookingRequest2 booking) {
+        Booking updatedBooking = bookingService.updateStylistId(bookingId, booking);
+        return ResponseEntity.ok(updatedBooking);
+    }
+
 
     @DeleteMapping("/{bookingId}")
     public ResponseEntity<?> deleteBooking(@PathVariable Long bookingId) {

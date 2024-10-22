@@ -2,9 +2,11 @@ package com.example.demo.service;
 
 import com.example.demo.entity.Booking;
 import com.example.demo.entity.ServiceofStylist;
+import com.example.demo.entity.Stylist;
 import com.example.demo.exception.DuplicateEntity;
 import com.example.demo.exception.NotFoundException;
 import com.example.demo.model.BookingRequest;
+import com.example.demo.model.BookingRequest2;
 import com.example.demo.repository.BookingRepository;
 import com.example.demo.repository.CustomerRepository;
 import com.example.demo.repository.HairServiceRepository;
@@ -79,6 +81,13 @@ public class BookingService {
         existingBooking.setStatus(newStatus);
         return bookingRepository.save(existingBooking);
     }
+    public Booking updateStylistId(Long bookingId, BookingRequest2 updatedStylist) {
+        Booking existingBooking = getBookingById(bookingId);
+        existingBooking.setStylist(updatedStylist.getStylist_id());
+        return bookingRepository.save(existingBooking);
+    }
+
+
     public void deleteBooking(Long bookingId) {
         Booking existingBooking = getBookingById(bookingId);
         bookingRepository.delete(existingBooking);

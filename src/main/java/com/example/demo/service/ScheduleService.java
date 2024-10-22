@@ -1,8 +1,11 @@
 package com.example.demo.service;
 
+import com.example.demo.entity.Booking;
 import com.example.demo.entity.Schedule;
 import com.example.demo.exception.NotFoundException;
+import com.example.demo.model.ScheduleRequest;
 import com.example.demo.repository.ScheduleRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +16,19 @@ public class ScheduleService {
     @Autowired
     private ScheduleRepository scheduleRepository;
 
+    @Autowired
+    ModelMapper modelMapper;
 
-    public Schedule createSchedule(Schedule schedule) {
+    public Schedule createSchedule(ScheduleRequest scheduleRequest) {
+        Schedule schedule1 = modelMapper.map(scheduleRequest, Schedule.class);
+        Schedule schedule = scheduleRepository.save(schedule1);
+        schedule.setStylist(schedule1.getStylist());
+        schedule.setStatus(schedule1.getStatus());
+        schedule.setReason(schedule1.getReason());
+        schedule.setStartTime(schedule1.getStartTime());
+        schedule.setEndTime(schedule1.getEndTime());
+
+
         return scheduleRepository.save(schedule);
     }
 
@@ -27,11 +41,12 @@ public class ScheduleService {
                 .orElseThrow(() -> new NotFoundException("Schedule not found"));
 
         existingSchedule.setStylist(schedule.getStylist());
-        existingSchedule.setService(schedule.getService());
-        existingSchedule.setAppointmentDate(schedule.getAppointmentDate());
+        existingSchedule.setReason(schedule.getReason());
+        existingSchedule.setStatus(schedule.getStatus());
         existingSchedule.setStartTime(schedule.getStartTime());
         existingSchedule.setEndTime(schedule.getEndTime());
-        existingSchedule.setStatus(schedule.getStatus());
+
+
 
         return scheduleRepository.save(existingSchedule);
     }

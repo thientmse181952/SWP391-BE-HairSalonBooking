@@ -17,11 +17,8 @@ public class StylistRequest {
     @JsonIgnore // kh trả về và kh bắt user nhập thông tin
     boolean isDeleted = false; //false = not deleted
 
-    String rating;
 
     String image;
-
-    //id, image, isdeleted, rating
 
     List<Long> service_id;
 

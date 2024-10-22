@@ -16,10 +16,6 @@ public class PaymentRequest {
     String payment_date;
     String payment_type;
 
-    @ManyToOne
-    @JoinColumn(name = "customer_id", nullable = false)
-    Customer customer;
-
     @JsonIgnore
     boolean isDeleted = false;
 

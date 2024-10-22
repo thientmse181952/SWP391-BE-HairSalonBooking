@@ -69,7 +69,6 @@ public class PaymentService {
         newPayment.setPayment_type(updatedPayment.getPayment_type());
         newPayment.setAmount(updatedPayment.getAmount());
         newPayment.setPayment_date(updatedPayment.getPayment_date());
-        newPayment.setCustomer(updatedPayment.getCustomer());
         newPayment.setBookings(updatedPayment.getBookings());
 
 
@@ -108,7 +107,7 @@ public String createPaymentUrl(long amount, String orderInfo) throws Unsupported
     vnp_Params.put("vnp_OrderInfo", orderInfo);
     vnp_Params.put("vnp_OrderType", orderType);
 
-    String vnp_ReturnUrl = "https://blearning.vn/guide/swp/docker-local?orderID=";
+    String vnp_ReturnUrl = "http://localhost:5173/success?orderID=";
     vnp_Params.put("vnp_ReturnUrl", vnp_ReturnUrl);
     vnp_Params.put("vnp_IpAddr", vnp_IpAddr);
     vnp_Params.put("vnp_Locale", locate);

@@ -21,10 +21,9 @@ public class Stylist {
             long id;
     @JsonIgnore // kh trả về và kh bắt user nhập thông tin
     boolean isDeleted = false; //false = not deleted
+    String image;
 
     String rating;
-
-    String image;
 
 
 

@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import com.example.demo.entity.Customer;
+import com.example.demo.entity.Schedule;
 import com.example.demo.entity.Stylist;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.JoinColumn;
@@ -16,13 +17,10 @@ public class BookingRequest {
 
     List<Long> service_id;
 
-    @ManyToOne
-    @JoinColumn(name = "stylist_id", nullable = false)
-    Stylist stylist;
+    Stylist stylist_id;
 
-    @ManyToOne
-    @JoinColumn(name = "customer_id", nullable = false)
-    Customer customer;
+    Customer customer_id;
+
     String appointmentDate;
     String startTime;
     String endTime;

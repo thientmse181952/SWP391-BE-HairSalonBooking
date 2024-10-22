@@ -42,6 +42,7 @@ public class Booking {
     Set<Payment> payments;
 
 
+
    String appointmentDate;
    String startTime;
    String endTime;

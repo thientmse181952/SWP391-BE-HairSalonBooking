@@ -18,14 +18,12 @@ public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long paymentId;
+    @JsonIgnore
+    boolean isDeleted = false;
 
     String amount;
     String payment_date;
     String payment_type;
-
-    @ManyToOne
-    @JoinColumn(name = "customer_id", nullable = false)
-    Customer customer;
 
     @ManyToMany
     @JoinTable(name = "Invoice",

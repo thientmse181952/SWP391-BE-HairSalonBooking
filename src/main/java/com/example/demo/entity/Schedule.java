@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Getter
@@ -13,19 +14,13 @@ public class Schedule implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long scheduleID; // Primary key
 
+    String reason;
+    String status;
+    String startTime;
+    String endTime;
     @ManyToOne
-    @JoinColumn(name = "stylistID", nullable = false)
-    private Stylist stylist; // Foreign key to Stylist entity
+    @JoinColumn(name = "stylist_id")
+    Stylist stylist;
 
-    @ManyToOne
-    @JoinColumn(name = "serviceID", nullable = false)
-    private ServiceofStylist service; // Foreign key to Service entity
 
-    private String appointmentDate;
-
-    private String startTime;
-
-    private String endTime;
-
-    private String status;
 }

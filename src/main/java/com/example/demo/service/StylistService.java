@@ -46,6 +46,7 @@ public class StylistService {
 
         stylist.setServiceofStylists(serviceofStylists);
 
+
         try{
             Stylist newStylist = stylistRepository.save(stylist);
             return newStylist;
@@ -70,8 +71,6 @@ public Stylist updateStylist(StylistRequest stylistRequest, long stylistId) {
         ServiceofStylist serviceofStylist = hairServiceRepository.findById(idService).orElseThrow(() -> new NotFoundException("Service not found"));
         serviceofStylists.add(serviceofStylist);
     }
-
-    stylist.setServiceofStylists(serviceofStylists);
 
     Stylist oldStylist = stylistRepository.findStylistsById(stylistId);
     if (oldStylist == null) {

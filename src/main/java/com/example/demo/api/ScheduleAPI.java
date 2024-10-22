@@ -2,6 +2,7 @@ package com.example.demo.api;
 
 import com.example.demo.entity.Schedule;
 import com.example.demo.exception.NotFoundException;
+import com.example.demo.model.ScheduleRequest;
 import com.example.demo.service.ScheduleService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
@@ -19,7 +20,7 @@ public class ScheduleAPI {
     private ScheduleService scheduleService;
 
     @PostMapping
-    public ResponseEntity<Schedule> createSchedule(@Valid @RequestBody Schedule schedule) {
+    public ResponseEntity<Schedule> createSchedule(@Valid @RequestBody ScheduleRequest schedule) {
         Schedule newSchedule = scheduleService.createSchedule(schedule);
         return new ResponseEntity<>(newSchedule, HttpStatus.CREATED);
     }

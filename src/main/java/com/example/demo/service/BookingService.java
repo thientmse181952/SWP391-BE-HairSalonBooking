@@ -68,7 +68,6 @@ public class BookingService {
         Booking existingBooking = getBookingById(bookingId);
         existingBooking.setStylist(updatedBooking.getStylist());
         existingBooking.setCustomer(updatedBooking.getCustomer());
-//        existingBooking.setSchedule(updatedBooking.getSchedule());
         existingBooking.setAppointmentDate(updatedBooking.getAppointmentDate());
         existingBooking.setStartTime(updatedBooking.getStartTime());
         existingBooking.setEndTime(updatedBooking.getEndTime());

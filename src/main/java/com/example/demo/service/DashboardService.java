@@ -31,6 +31,31 @@ public class DashboardService {
     @Autowired
     PaymentRepository paymentRepository;
 
+    public List<Map<String, String>> getAllCustomers() {
+        List<Customer> customers = bookingRepository.findAllCustomers();
+
+        List<Map<String, String>> customerData = new ArrayList<>();
+        for (Customer customer : customers) {
+            Map<String, String> data = new HashMap<>();
+            data.put("fullName", customer.getAccount().getFullName()); // Adjust according to your method for getting the full name
+            customerData.add(data);
+        }
+
+        return customerData;
+    }
+
+    public List<Map<String, String>> getAllStylists() {
+        List<Stylist> stylists = bookingRepository.findAllStylists();
+
+        List<Map<String, String>> stylistData = new ArrayList<>();
+        for (Stylist stylist : stylists) {
+            Map<String, String> data = new HashMap<>();
+            data.put("fullName", stylist.getAccount().getFullName()); // Adjust according to your method for getting the full name
+            stylistData.add(data);
+        }
+
+        return stylistData;
+    }
     public Map<String, Object> getDashboardStats() {
         Map<String, Object> stats = new HashMap<>();
         //đếm số lượng booking trong hệ thống
@@ -86,6 +111,7 @@ public class DashboardService {
 
         return stats;
     }
+
     //Doanh thu
     public Map<String, Object> getMonthlyRevenue(int month, int year) {
         Map<String, Object> revenueData = new HashMap<>();
@@ -112,6 +138,30 @@ public class DashboardService {
         revenueData.put("totalRevenue", totalMonthlyRevenue.toString()); // Chuyển đổi thành String nếu cần
 
         return revenueData;
+    }
+
+    public Map<String, Object> getMonthsWithRevenue() {
+        Map<String, Object> revenueMonthsData = new HashMap<>();
+        List<Object[]> monthsWithRevenue = paymentRepository.findDistinctMonthsAndYears();
+
+        List<Map<String, Object>> months = new ArrayList<>();
+        for (Object[] entry : monthsWithRevenue) {
+            int month = (int) entry[0];
+            int year = (int) entry[1];
+
+            // Tính doanh thu tháng, năm
+            Map<String, Object> revenueData = getMonthlyRevenue(month, year);
+
+            Map<String, Object> monthData = new HashMap<>();
+            monthData.put("month", month);
+            monthData.put("year", year);
+            monthData.put("totalRevenue", revenueData.get("totalRevenue"));
+
+            months.add(monthData);
+        }
+
+        revenueMonthsData.put("monthsWithRevenue", months);
+        return revenueMonthsData;
     }
 }
 

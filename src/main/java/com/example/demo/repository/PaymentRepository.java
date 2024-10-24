@@ -12,5 +12,7 @@ public interface PaymentRepository extends JpaRepository<Payment, Long> {
     @Query("SELECT p FROM Payment p WHERE FUNCTION('MONTH', CAST(p.payment_date AS DATE)) = :month AND FUNCTION('YEAR', CAST(p.payment_date AS DATE)) = :year")
     List<Payment> findPaymentsByMonthAndYear(@Param("month") int month, @Param("year") int year);
 
+    @Query("SELECT FUNCTION('MONTH', CAST(p.payment_date AS DATE)), FUNCTION('YEAR', CAST(p.payment_date AS DATE)) FROM Payment p")
+    List<Object[]> findDistinctMonthsAndYears();
 }
 

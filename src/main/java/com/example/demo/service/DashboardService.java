@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.entity.Account;
 import com.example.demo.entity.Role;
+import com.example.demo.entity.Stylist;
 import com.example.demo.repository.AccountRepository;
 import com.example.demo.repository.BookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,26 +39,21 @@ public class DashboardService {
         stats.put("stylistcount", stylistCount);
 
         //top 3 stylist
-        Pageable top3 = (Pageable) PageRequest.of(0, 3); // Limit the query to 3 results
-        List<Object[]> topStylists = bookingRepository.findTopStylistsByBookings(top3);
-
-        List<Map<String, Object>> topStylistList = new ArrayList<>();
+        Pageable topThree = PageRequest.of(0, 3);
+        List<Object[]> topStylists = bookingRepository.findTop3Stylists(topThree);
+        List<Map<String, Object>> topStylistData = new ArrayList<>();
         for (Object[] result : topStylists) {
-            Map<String, Object> stylistInfo = new HashMap<>();
-            Long stylistId = (Long) result[0]; // Stylist ID
-            Long bookingCount = (Long) result[1]; // Booking count
+            Stylist stylist = (Stylist) result[0];
+            long bookingCount = (long) result[1];
 
-            // Fetch stylist details from AccountRepository
-            Account stylistAccount = accountRepository.findById(stylistId).orElse(null);
-            if (stylistAccount != null) {
-                stylistInfo.put("stylistname", stylistAccount.getFullName());
-                stylistInfo.put("stylistbooked", bookingCount);
-                topStylistList.add(stylistInfo);
-            }
+            Map<String, Object> stylistData = new HashMap<>();
+            stylistData.put("stylistName", stylist.getAccount().getFullName());
+            stylistData.put("stylistId", stylist.getId());
+            stylistData.put("bookingCount", bookingCount);
+
+            topStylistData.add(stylistData);
         }
-
-        // Add the top stylists to the stats
-        stats.put("topstylists", topStylistList);
+        stats.put("topStylists", topStylistData);
 
         return stats;
     }

@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface BookingRepository extends JpaRepository<Booking, Long> {
 
-    @Query("SELECT b.stylist.id, COUNT(b) FROM Booking b GROUP BY b.stylist.id ORDER BY COUNT(b) DESC")
-    List<Object[]> findTopStylistsByBookings(Pageable pageable);
+    @Query("SELECT b.stylist, COUNT(b) as bookingCount FROM Booking b " +
+            "GROUP BY b.stylist " +
+            "ORDER BY bookingCount DESC")
+    List<Object[]> findTop3Stylists(Pageable pageable);
 }

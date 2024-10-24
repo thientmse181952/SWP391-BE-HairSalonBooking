@@ -1,15 +1,16 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.Account;
-import com.example.demo.entity.Role;
-import com.example.demo.entity.Stylist;
+import com.example.demo.entity.*;
 import com.example.demo.repository.AccountRepository;
 import com.example.demo.repository.BookingRepository;
+import com.example.demo.repository.PaymentRepository;
+import com.example.demo.repository.ServiceofStylistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +25,12 @@ public class DashboardService {
     @Autowired
     AccountRepository accountRepository;
 
+    @Autowired
+    ServiceofStylistRepository serviceofStylistRepository;
+
+    @Autowired
+    PaymentRepository paymentRepository;
+
     public Map<String, Object> getDashboardStats() {
         Map<String, Object> stats = new HashMap<>();
         //đếm số lượng booking trong hệ thống
@@ -37,6 +44,10 @@ public class DashboardService {
         //số lượng stylist
         long stylistCount = accountRepository.countByRole(Role.STYLIST);
         stats.put("stylistcount", stylistCount);
+
+        //số lượng dịch vụ
+        long serviceofStylistCount = serviceofStylistRepository.countAllServicesOfStylist();
+        stats.put("serviceofstylistcount", serviceofStylistCount);
 
         //top 3 stylist
         Pageable topThree = PageRequest.of(0, 3);
@@ -55,6 +66,52 @@ public class DashboardService {
         }
         stats.put("topStylists", topStylistData);
 
+        // Top 5 dịch vụ được book nhèo nhất
+        Pageable topFive = PageRequest.of(0, 5);
+        List<Object[]> topServices = serviceofStylistRepository.findTop5MostBookedServices(topFive);
+
+        List<Map<String, Object>> topServiceData = topServices.stream().map(service -> {
+            ServiceofStylist serviceofStylist = (ServiceofStylist) service[0];
+            long bookingCount = (long) service[1];
+
+            Map<String, Object> serviceMap = new HashMap<>();
+            serviceMap.put("serviceId", serviceofStylist.getId());
+            serviceMap.put("serviceName", serviceofStylist.getName());
+            serviceMap.put("bookingCount", bookingCount);
+
+            return serviceMap;
+        }).toList();
+
+        stats.put("top5services", topServiceData);
+
         return stats;
     }
+    //Doanh thu
+    public Map<String, Object> getMonthlyRevenue(int month, int year) {
+        Map<String, Object> revenueData = new HashMap<>();
+
+        // Doanh thu cho tháng và năm được chỉ định
+        List<Payment> payments = paymentRepository.findPaymentsByMonthAndYear(month, year);
+
+        // Tính tổng doanh thu tháng
+        BigDecimal totalMonthlyRevenue = BigDecimal.ZERO;
+
+        for (Payment payment : payments) {
+            // Chuyển amount thành BigDecimal
+            try {
+                totalMonthlyRevenue = totalMonthlyRevenue.add(new BigDecimal(payment.getAmount()));
+            } catch (NumberFormatException e) {
+                // Xử lý trường hợp số tiền không phải là số hợp lệ
+                e.printStackTrace(); // Ghi lại thay vì in ra
+            }
+        }
+
+        // Lưu trữ kết quả ở Map
+        revenueData.put("month", month);
+        revenueData.put("year", year);
+        revenueData.put("totalRevenue", totalMonthlyRevenue.toString()); // Chuyển đổi thành String nếu cần
+
+        return revenueData;
+    }
 }
+

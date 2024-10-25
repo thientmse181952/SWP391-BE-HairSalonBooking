@@ -2,6 +2,7 @@ package com.example.demo.api;
 
 import com.example.demo.config.VNPayConfig;
 import com.example.demo.entity.Payment;
+import com.example.demo.entity.ServiceofStylist;
 import com.example.demo.model.PaymentRequest;
 import com.example.demo.service.PaymentService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -53,11 +54,11 @@ public class PaymentAPI {
     }
 
 
-//    @DeleteMapping("/{bookingId}")
-//    public ResponseEntity<?> deleteBooking(@PathVariable Long bookingId) {
-//        bookingService.deleteBooking(bookingId);
-//        return ResponseEntity.ok("Booking deleted successfully.");
-//    }
+    @DeleteMapping("{id}")
+    public ResponseEntity<Payment> deleteService(@PathVariable long id) {
+        Payment payment = paymentService.deleteSchedule(id);
+        return ResponseEntity.ok(payment);
+    }
 
 
     @PostMapping("/payment-vnpay")

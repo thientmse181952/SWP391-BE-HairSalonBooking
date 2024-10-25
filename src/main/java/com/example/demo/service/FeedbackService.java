@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.entity.Category;
 import com.example.demo.entity.Feedback;
 import com.example.demo.entity.Payment;
 import com.example.demo.exception.NotFoundException;
@@ -17,7 +18,7 @@ public class FeedbackService {
     FeedbackRepository feedbackRepository;
 
     public List<Feedback> getAllFeedback() {
-        return feedbackRepository.findAll();
+        return feedbackRepository.findFeedbackByIsDeletedFalse();
     }
 
     public Feedback getFeedbackById(long feedbackId) {
@@ -47,8 +48,12 @@ public class FeedbackService {
         return feedbackRepository.save(newFeedback);
     }
 
-//    public void deletePayment(Long bookingId) {
-//        Booking existingBooking = getBookingById(bookingId);
-//        paymentRepository.delete(existingBooking);
-//    }
+    public Feedback deleteFeedback(long feedbackId) {
+        Feedback feedback = feedbackRepository.findFeedbackById(feedbackId);
+        if (feedback == null) {
+            throw new NotFoundException("Feedback not found");
+        }
+        feedback.setDeleted(true);
+        return feedbackRepository.save(feedback);
+    }
 }

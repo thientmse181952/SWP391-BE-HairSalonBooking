@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.config.VNPayConfig;
 import com.example.demo.entity.Booking;
 import com.example.demo.entity.Payment;
+import com.example.demo.entity.Schedule;
 import com.example.demo.exception.DuplicateEntity;
 import com.example.demo.exception.NotFoundException;
 import com.example.demo.model.PaymentRequest;
@@ -83,10 +84,14 @@ public class PaymentService {
         return paymentRepository.save(newPayment);
     }
 
-//    public void deletePayment(Long bookingId) {
-//        Booking existingBooking = getBookingById(bookingId);
-//        paymentRepository.delete(existingBooking);
-//    }
+    public Payment deleteSchedule(long paymentId) {
+        Payment booking = paymentRepository.findFeedbackById(paymentId);
+        if (booking == null) {
+            throw new NotFoundException("Payment not found");
+        }
+        booking.setDeleted(true);
+        return paymentRepository.save(booking);
+    }
 public String createPaymentUrl(long amount, String orderInfo) throws UnsupportedEncodingException {
     String vnp_Version = "2.1.0";
     String vnp_Command = "pay";

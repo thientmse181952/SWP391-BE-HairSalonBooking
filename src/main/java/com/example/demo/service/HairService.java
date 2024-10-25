@@ -1,11 +1,13 @@
 package com.example.demo.service;
 
+import com.example.demo.entity.Category;
 import com.example.demo.entity.ServiceofStylist;
 import com.example.demo.entity.Stylist;
 import com.example.demo.exception.DuplicateEntity;
 import com.example.demo.exception.NotFoundException;
 import com.example.demo.model.HairServiceRequest;
 import com.example.demo.model.ServiceRequest;
+import com.example.demo.repository.CategoryRepository;
 import com.example.demo.repository.HairServiceRepository;
 import com.example.demo.repository.StylistRepository;
 import org.modelmapper.ModelMapper;
@@ -25,6 +27,9 @@ public class HairService {
 
     @Autowired
     ModelMapper modelMapper;
+
+    @Autowired
+    CategoryRepository categoryRepository;
 
 
 
@@ -50,6 +55,7 @@ public class HairService {
         }
 
     }
+
 
 
 

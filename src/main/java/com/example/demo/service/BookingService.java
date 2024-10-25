@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Booking;
+import com.example.demo.entity.Category;
 import com.example.demo.entity.ServiceofStylist;
 import com.example.demo.entity.Stylist;
 import com.example.demo.exception.DuplicateEntity;
@@ -34,7 +35,7 @@ public class BookingService {
     HairServiceRepository hairServiceRepository;
 
     public List<Booking> getAllBookings() {
-        return bookingRepository.findAll();
+        return bookingRepository.findBookingByIsDeletedFalse();
     }
 
     public Booking getBookingById(Long bookingId) {
@@ -87,10 +88,18 @@ public class BookingService {
         return bookingRepository.save(existingBooking);
     }
 
-
-    public void deleteBooking(Long bookingId) {
-        Booking existingBooking = getBookingById(bookingId);
-        bookingRepository.delete(existingBooking);
+//
+//    public void deleteBooking(Long bookingId) {
+//        Booking existingBooking = getBookingById(bookingId);
+//        bookingRepository.delete(existingBooking);
+//    }
+public Booking deleteBooking(long categoryId) {
+    Booking booking = bookingRepository.findBookingById(categoryId);
+    if (booking == null) {
+        throw new NotFoundException("Category not found");
     }
-
+    booking.setDeleted(true);
+    return bookingRepository.save(booking);
 }
+}
+

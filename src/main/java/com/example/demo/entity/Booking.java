@@ -16,7 +16,10 @@ public class Booking {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long bookingId;
+    long id;
+
+    @JsonIgnore
+    boolean isDeleted = false;
 
     @ManyToOne
     @JoinColumn(name = "stylist_id", nullable = false)

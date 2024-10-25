@@ -2,12 +2,16 @@ package com.example.demo.api;
 
 import com.example.demo.entity.Booking;
 import com.example.demo.entity.ServiceofStylist;
+import com.example.demo.exception.DuplicateEntity;
+import com.example.demo.exception.NotFoundException;
 import com.example.demo.model.HairServiceRequest;
 import com.example.demo.model.ServiceRequest;
+import com.example.demo.service.CategoryService;
 import com.example.demo.service.HairService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,11 +24,15 @@ public class HairServiceAPI {
     @Autowired
     HairService hairService;
 
+    @Autowired
+    CategoryService categoryService;
+
     @PostMapping
     public ResponseEntity<ServiceofStylist> createService(@Valid @RequestBody HairServiceRequest serviceofHair) {
         ServiceofStylist newServiceofHair =hairService.createNewService(serviceofHair);
         return ResponseEntity.ok(newServiceofHair);
     }
+
 
     @GetMapping("/getService")
     public ResponseEntity get() {

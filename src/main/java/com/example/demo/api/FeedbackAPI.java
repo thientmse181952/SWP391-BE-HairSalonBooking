@@ -1,5 +1,6 @@
 package com.example.demo.api;
 
+import com.example.demo.entity.Category;
 import com.example.demo.entity.Feedback;
 import com.example.demo.entity.Payment;
 import com.example.demo.service.FeedbackService;
@@ -44,9 +45,9 @@ public class FeedbackAPI {
         return ResponseEntity.ok(updateFeedback);
     }
 
-//    @DeleteMapping("/{bookingId}")
-//    public ResponseEntity<?> deleteBooking(@PathVariable Long bookingId) {
-//        bookingService.deleteBooking(bookingId);
-//        return ResponseEntity.ok("Booking deleted successfully.");
-//    }
+    @DeleteMapping("{id}")
+    public ResponseEntity<Feedback> deleteFeedback(@PathVariable long id) {
+        Feedback feedback = feedbackService.deleteFeedback(id);
+        return ResponseEntity.ok(feedback);
+    }
 }

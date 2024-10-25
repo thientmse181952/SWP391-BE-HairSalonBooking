@@ -17,7 +17,7 @@ public class Payment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long paymentId;
+    Long id;
     @JsonIgnore
     boolean isDeleted = false;
 

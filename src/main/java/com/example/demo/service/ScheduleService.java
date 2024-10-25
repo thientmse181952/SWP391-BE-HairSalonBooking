@@ -62,10 +62,12 @@ public class ScheduleService {
         return scheduleRepository.save(existingBooking);
     }
 
-    public void deleteSchedule(Long scheduleId) {
-        if (!scheduleRepository.existsById(scheduleId)) {
+    public Schedule deleteSchedule(long scheduleId) {
+        Schedule booking = scheduleRepository.findFeedbackById(scheduleId);
+        if (booking == null) {
             throw new NotFoundException("Schedule not found");
         }
-        scheduleRepository.deleteById(scheduleId);
+        booking.setDeleted(true);
+        return scheduleRepository.save(booking);
     }
 }

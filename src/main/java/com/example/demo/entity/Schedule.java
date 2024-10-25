@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +13,10 @@ import java.util.List;
 public class Schedule implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long scheduleID; // Primary key
+    long id; // Primary key
+
+    @JsonIgnore
+    boolean isDeleted = false;
 
     String reason;
     String status;

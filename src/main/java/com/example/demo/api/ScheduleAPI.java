@@ -50,13 +50,9 @@ public class ScheduleAPI {
     }
 
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteSchedule(@PathVariable Long id) {
-        try {
-            scheduleService.deleteSchedule(id);
-            return new ResponseEntity<>("Schedule deleted successfully", HttpStatus.OK);
-        } catch (NotFoundException e) {
-            return new ResponseEntity<>("Schedule not found", HttpStatus.NOT_FOUND);
-        }
+    @DeleteMapping("{id}")
+    public ResponseEntity<Schedule> deleteCategory(@PathVariable long id) {
+        Schedule category = scheduleService.deleteSchedule(id);
+        return ResponseEntity.ok(category);
     }
 }

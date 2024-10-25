@@ -1,6 +1,7 @@
 package com.example.demo.api;
 
 import com.example.demo.entity.Booking;
+import com.example.demo.entity.Category;
 import com.example.demo.model.BookingRequest;
 import com.example.demo.model.BookingRequest2;
 import com.example.demo.service.BookingService;
@@ -56,9 +57,9 @@ public class BookingAPI {
     }
 
 
-    @DeleteMapping("/{bookingId}")
-    public ResponseEntity<?> deleteBooking(@PathVariable Long bookingId) {
-        bookingService.deleteBooking(bookingId);
-        return ResponseEntity.ok("Booking deleted successfully.");
+    @DeleteMapping("{id}")
+    public ResponseEntity<Booking> deleteCategory(@PathVariable long id) {
+        Booking category = bookingService.deleteBooking(id);
+        return ResponseEntity.ok(category);
     }
 }

@@ -4,6 +4,7 @@ import com.example.demo.entity.Category;
 import com.example.demo.exception.DuplicateEntity;
 import com.example.demo.exception.NotFoundException;
 import com.example.demo.repository.CategoryRepository;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,3 +47,7 @@ public class CategoryService {
         return categoryRepository.save(oldCategory);
     }
 }
+
+
+
+

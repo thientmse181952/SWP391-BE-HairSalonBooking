@@ -25,7 +25,7 @@ public class ServiceofStylist {
     @NotBlank(message = "Category can't be blank!")
     String description;
 
-    String price;
+    int price;
 
     @NotBlank(message = "Category can't be blank!")
     String duration;

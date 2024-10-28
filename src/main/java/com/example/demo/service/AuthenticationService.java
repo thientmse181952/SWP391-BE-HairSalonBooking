@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Account;
+import com.example.demo.entity.Booking;
 import com.example.demo.exception.DuplicateEntity;
 import com.example.demo.exception.NotFoundException;
 import com.example.demo.model.*;
@@ -218,5 +219,30 @@ public class AuthenticationService implements UserDetailsService {
         otpStore.remove(phoneNumber);
         otpExpirationStore.remove(phoneNumber);
     }
+
+    public Account deleteAccount(long accountId) {
+        Account account = accountRepository.findAccountById(accountId);
+        if (account == null) {
+            throw new NotFoundException("Account not found");
+        }
+        account.setDeleted(true);
+        return accountRepository.save(account);
+    }
+
+    public Account restoreAccount(long accountId) {
+        Account account = accountRepository.findAccountById(accountId);
+        if (account == null) {
+            throw new NotFoundException("Account not found");
+        }
+        if (!account.isDeleted()) {
+            throw new IllegalStateException("Account is not deleted");
+        }
+        account.setDeleted(false);
+        return accountRepository.save(account);
+    }
+
+
+
+
 
 }

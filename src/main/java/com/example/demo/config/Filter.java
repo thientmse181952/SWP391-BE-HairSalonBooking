@@ -61,7 +61,8 @@ public class Filter extends OncePerRequestFilter {
             "/api/request-reset-password",
             "/api/payment/payment-callback",
             "/api/category-collection/getCollection",
-            "/api/category-collection/{categoryServiceId}"
+            "/api/category-collection/{categoryServiceId}",
+            "/api/account"
 
 
 

@@ -28,7 +28,7 @@ public class Account implements UserDetails {
     Role role;
 
     @JsonIgnore // kh trả về và kh bắt user nhập thông tin
-    boolean isDeleted = false; //false = not deleted
+    boolean isDeleted; //false = not deleted
 
     @NotBlank
     String fullName;

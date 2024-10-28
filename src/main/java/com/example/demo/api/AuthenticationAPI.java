@@ -1,6 +1,8 @@
 package com.example.demo.api;
 
 import com.example.demo.entity.Account;
+import com.example.demo.entity.Booking;
+import com.example.demo.exception.NotFoundException;
 import com.example.demo.model.*;
 import com.example.demo.service.AuthenticationService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -45,7 +47,7 @@ public class AuthenticationAPI {
         Account updateAccount = authenticationService.getAccountById(accountId);
         return ResponseEntity.ok(updateAccount);
     }
-    
+
     @PutMapping("/{id}")
     public ResponseEntity<Account> updateAuthentication(
             @PathVariable(value = "id") Long authId,  // Đảm bảo điều này phù hợp với đường dẫn
@@ -96,5 +98,22 @@ public class AuthenticationAPI {
     public ResponseEntity<String> resetPassword(@Valid @RequestBody ResetPasswordRequest resetPasswordRequest) {
         authenticationService.resetPassword(resetPasswordRequest);
         return ResponseEntity.ok("Password reset successfully.");
+    }
+    @DeleteMapping("{BanId}")
+    public ResponseEntity<Account> deleteCategory(@PathVariable long BanId) {
+        Account category = authenticationService.deleteAccount(BanId);
+        return ResponseEntity.ok(category);
+    }
+
+    @PutMapping("/{accountId}/restore")
+    public ResponseEntity<Account> restoreAccount(@PathVariable long accountId) {
+        try {
+            Account restoredAccount = authenticationService.restoreAccount(accountId);
+            return ResponseEntity.ok(restoredAccount);
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+        }
     }
 }

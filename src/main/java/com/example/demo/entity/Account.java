@@ -27,7 +27,7 @@ public class Account implements UserDetails {
     @Enumerated(EnumType.STRING)
     Role role;
 
-    @JsonIgnore // kh trả về và kh bắt user nhập thông tin
+    // kh trả về và kh bắt user nhập thông tin
     boolean isDeleted; //false = not deleted
 
     @NotBlank

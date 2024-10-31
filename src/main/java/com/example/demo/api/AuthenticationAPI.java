@@ -42,13 +42,13 @@ public class AuthenticationAPI {
         return ResponseEntity.ok(accounts);
     }
 
-    @GetMapping("/{accountId}")
+    @GetMapping("{accountId}")
     public ResponseEntity<Account> getAccountById(@PathVariable Long accountId) {
         Account updateAccount = authenticationService.getAccountById(accountId);
         return ResponseEntity.ok(updateAccount);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("{id}")
     public ResponseEntity<Account> updateAuthentication(
             @PathVariable(value = "id") Long authId,  // Đảm bảo điều này phù hợp với đường dẫn
             @RequestBody @Validated ChangInforRequest request) {

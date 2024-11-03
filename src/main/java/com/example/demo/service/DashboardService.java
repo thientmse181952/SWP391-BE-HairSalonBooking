@@ -11,10 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class DashboardService {
@@ -144,20 +141,28 @@ public class DashboardService {
         Map<String, Object> revenueMonthsData = new HashMap<>();
         List<Object[]> monthsWithRevenue = paymentRepository.findDistinctMonthsAndYears();
 
+        Set<String> uniqueMonths = new HashSet<>();
         List<Map<String, Object>> months = new ArrayList<>();
+
         for (Object[] entry : monthsWithRevenue) {
             int month = (int) entry[0];
             int year = (int) entry[1];
+            String monthYearKey = month + "-" + year;
 
-            // Tính doanh thu tháng, năm
-            Map<String, Object> revenueData = getMonthlyRevenue(month, year);
+            // Ensure the month is only processed once
+            if (!uniqueMonths.contains(monthYearKey)) {
+                uniqueMonths.add(monthYearKey);
 
-            Map<String, Object> monthData = new HashMap<>();
-            monthData.put("month", month);
-            monthData.put("year", year);
-            monthData.put("totalRevenue", revenueData.get("totalRevenue"));
+                // Calculate revenue for this month and year
+                Map<String, Object> revenueData = getMonthlyRevenue(month, year);
 
-            months.add(monthData);
+                Map<String, Object> monthData = new HashMap<>();
+                monthData.put("month", month);
+                monthData.put("year", year);
+                monthData.put("totalRevenue", revenueData.get("totalRevenue"));
+
+                months.add(monthData);
+            }
         }
 
         revenueMonthsData.put("monthsWithRevenue", months);

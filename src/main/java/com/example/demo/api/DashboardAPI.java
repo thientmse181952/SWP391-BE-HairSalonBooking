@@ -47,7 +47,7 @@ public class DashboardAPI {
         return ResponseEntity.status(403).body("Access denied: You must be a manager to view revenue data.");
     }
     @GetMapping("/revenue/months")
-    public ResponseEntity getMonthsWithRevenue() {
+    public ResponseEntity<?> getMonthsWithRevenue() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         // Check if the user is authenticated and has manager role

@@ -62,13 +62,7 @@ public class Filter extends OncePerRequestFilter {
             "/api/payment/payment-callback",
             "/api/category-collection/getCollection",
             "/api/category-collection/{categoryServiceId}",
-            "/api/account",
-            "/api/{accountId}"
-
-
-
-
-
+            "/api/account"
 
 
     );
@@ -128,7 +122,6 @@ public class Filter extends OncePerRequestFilter {
 
 
                 }
-
 
     }
 public String getToken(HttpServletRequest request){
